@@ -10,13 +10,14 @@ public class Questao08 {
 		Scanner valor = new Scanner(System.in);
 		
 		int n = valor.nextInt();
-		String ast = "*";
 		
 		for (int i = 1; i <= n; i++) {
-			System.out.println(ast);
-			System.out.print(ast);
-			
+			System.out.println();
+			for(int j = 0; j < i; j++) {
+				System.out.print("*");	
+			}	
 		}
+		valor.close();
 	}
 
 }

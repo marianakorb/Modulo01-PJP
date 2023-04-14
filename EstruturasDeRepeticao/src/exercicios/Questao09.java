@@ -14,6 +14,7 @@ public class Questao09 {
 		for(int i = n; i >= 0; i--) {
 			System.out.println(i);
 		}
+		valor.close();
 	}
 
 }

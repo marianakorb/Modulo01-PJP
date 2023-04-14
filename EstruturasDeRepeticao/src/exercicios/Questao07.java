@@ -17,7 +17,7 @@ public class Questao07 {
 			}
 		}
 		System.out.println(soma);
-
+		valor.close();
 	}
 
 }
