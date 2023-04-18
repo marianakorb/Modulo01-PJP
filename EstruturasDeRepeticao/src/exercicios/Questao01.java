@@ -6,41 +6,50 @@ public class Questao01 {
 
 	public static void main(String[] args) {
 		
-		System.out.println("Escolha uma operadoração: [1]Adição [2]Subtração [3]Divisão [4] Multiplicação [0]Sair ");
+		int opcao;
+		double res;
+		Scanner leitor =  new Scanner(System.in);
 		
-		Scanner escolha =  new Scanner(System.in);
+		System.out.println("Digite um número: ");
+		double num1 = leitor.nextDouble();
+		System.out.println("Digite outro número: ");
+		double num2 = leitor.nextDouble();
 		
-		int operador = escolha.nextInt();
-		String op;
-		
-		switch (operador) {
-			case 1:
-				op = "+";
-				System.out.println(op);
-				break;
-			case 2:
-				op = "-";
-				System.out.println(op);
-				break;
-			case 3:
-				op = "/";
-				System.out.println(op);
-				break;
-			case 4:
-				op = "*";
-				System.out.println(op);
-				break;
-			case 0:
-				op = "Saindo...";
-				System.out.println(op);
-				break;
-			default:
+		do {
+			System.out.println(" Calculadora");
+			System.out.println("[1] Adição");
+			System.out.println("[2]Subtração");
+			System.out.println("[3]Divisão");
+			System.out.println("[4] Multiplicação");
+			System.out.println("[0]Sair");
+			
+			System.out.println("Digite sua opção: ");
+			opcao = leitor.nextInt();
+			
+			if (opcao == 1) {
+				res = num1 + num2;
+				System.out.println(res);
+			} else if (opcao == 2) {
+				res = num1 - num2;
+				System.out.println(res);
+			} else if (opcao == 3) {
+				res = num1 / num2;
+				System.out.println(res);
+			} else if (opcao == 4) {
+				res = num1 * num2;	
+				System.out.println(res);
+			} else if (opcao == 0) {
+				System.out.println("Saindo...");
+			} else {
 				System.out.println("Escolha inválida");
-				break;
-		}
+			}
+			
+			
+		} while(opcao != 0);
 		
-		escolha.close();
 		
+		
+		leitor.close();
 		
 	}
 
