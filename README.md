@@ -1,2 +1,2 @@
 # PJP
-Programa Jovem Programados - SENAC
+Programa Jovem Programador - SENAC
