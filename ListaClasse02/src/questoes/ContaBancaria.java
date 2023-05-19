@@ -9,64 +9,68 @@ public class ContaBancaria {
 	
 	// construtor sem parametros
 	public ContaBancaria() {
-		nome = "";
-		cpf = "";
-		numeroDaConta = "";
-		saldo = 0;
+		this.nome = "";
+		this.cpf = "";
+		this.numeroDaConta = "";
+		this.saldo = 0;
 	}
 	
 	public ContaBancaria(String nomePessoa, String cpfPessoa, String numConta, double saldoConta) {
-		nome = nomePessoa;
-		cpf = cpfPessoa;
-		numeroDaConta = numConta;
+		this.nome = nomePessoa;
+		this.cpf = cpfPessoa;
+		this.numeroDaConta = numConta;
 		
 		if (saldoConta > 0) {
-			saldo = saldoConta;
+			this.saldo = saldoConta;
 		} else {
-			saldo =+ 0;
+			this.saldo =+ 0;
 		}
 		
-		System.out.println("Nome: " + nome);
-		System.out.println("CPF: " + cpf);
-		System.out.println("Numero da Conta: " + numConta);
-		System.out.println("Saldo: " + saldo);
-		System.out.println("-------------------");
+		apresentar();
 	}
 	
 	public void setNome(String nomePessoa) {
-		nome = nomePessoa;
+		this.nome = nomePessoa;
 	}
 	
 	public void setCpf(String cpfPessoa) { 
-		cpf = cpfPessoa;
+		this.cpf = cpfPessoa;
 	}
 	
 	public void setNumDaConta(String numConta) {
-		numeroDaConta = numConta;
+		this.numeroDaConta = numConta;
 	}
 	
 	public void setSaldo(double saldoConta) {
 		if (saldoConta > 0) {
-			saldo = saldoConta;
+			this.saldo = saldoConta;
 		} else {
-			saldo =+ 0;
+			this.saldo =+ 0;
 		}
 	}
 	
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 	
 	public String getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 	
 	public String getNumDaConta() {
-		return numeroDaConta;
+		return this.numeroDaConta;
 	}
 	
 	public double getSaldo() {
-		return saldo;
+		return this.saldo;
+	}
+	
+	public void apresentar() {
+		System.out.println("Nome: " + this.nome);
+		System.out.println("CPF: " + this.cpf);
+		System.out.println("Numero da Conta: " + this.numConta);
+		System.out.println("Saldo: " + this.saldo);
+		System.out.println("-------------------");
 	}
 }
 
