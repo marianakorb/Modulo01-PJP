@@ -6,9 +6,9 @@ public class Aluno {
 	private String matriculaAluno;
 	
 	public Aluno() {
-		nomeAluno = "";
-		idadeAluno = 0;
-		matriculaAluno = "";
+		this.nomeAluno = "";
+		this.idadeAluno = 0;
+		this.matriculaAluno = "";
 		
 		apresentar();
 	}
