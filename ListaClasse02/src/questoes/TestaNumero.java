@@ -6,30 +6,30 @@ public class TestaNumero {
 	
 	// construtor sem parametro
 	public TestaNumero() {
-		num = 0;
-		System.out.println("Construtor sem parametro: " + num);
+		this.num = 0;
+		System.out.println("Construtor sem parametro: " + this.num);
 	}
 	
 	// construtor com parametro
 	public TestaNumero(double n) {
-		num = n;
-		System.out.println("Construtor com parametro: " + num);
+		this.num = n;
+		System.out.println("Construtor com parametro: " + this.num);
 	}
 	
 	public void setNum(double n) {
-		num = n;
-		System.out.println("num set: " + num);
+		this.num = n;
+		System.out.println("num set: " + this.num);
 	}
 	
 	public double getNum() {
-		return num;
+		return this.num;
 	}
 	
 	public void testar() {
 		
-		if (num > 0) {
+		if (this.num > 0) {
 			System.out.println("POSITIVO");
-		} else if(num < 0) {
+		} else if(this.num < 0) {
 			System.out.println("NEGATIVO");
 		} else {
 			System.out.println("ZERO");
