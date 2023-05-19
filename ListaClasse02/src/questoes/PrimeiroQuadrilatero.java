@@ -6,25 +6,25 @@ public class PrimeiroQuadrilatero {
 	private double altura;
 	
 	public PrimeiroQuadrilatero() {
-		largura = 0;
-		altura = 0;
-		System.out.println("Construtor sem parametro: " + largura + " e " + altura);
+		this.largura = 0;
+		this.altura = 0;
+		System.out.println("Construtor sem parametro: " + this.largura + " e " + this.altura);
 	}
 	
 	public PrimeiroQuadrilatero(double l, double a) {
 		if(l > 0) {
-			largura = l;
-			System.out.println("Construtor com parametro largura: " + largura);
+			this.largura = l;
+			System.out.println("Construtor com parametro largura: " + this.largura);
 		} else {
-			largura = 0;
+			this.largura = 0;
 			System.out.println("Valor inválido para o atributo largura. Inicializando com zero.");
 		}
 		
 		if(a > 0) {
-			altura = a;
-			System.out.println("Construtor com parametro altura: " + altura);
+			this.altura = a;
+			System.out.println("Construtor com parametro altura: " + this.altura);
 		} else {
-			altura = 0;
+			this.altura = 0;
 			System.out.println("Valor inválido para o atributo altura. Inicializando com zero.");
 		}
 		
@@ -35,37 +35,37 @@ public class PrimeiroQuadrilatero {
 	
 	public void setLargura(double l) {
 		if(l > 0) {
-			largura = l;
-			System.out.println("Largura set: " +  largura);
+			this.largura = l;
+			System.out.println("Largura set: " +  this.largura);
 		} else {
-			largura = 0;
+			this.largura = 0;
 			System.out.println("Valor inválido para o atributo largura. Inicializando com zero.");
 		}
 	}
 	
 	public void setAltura(double a) {
 		if(a > 0) {
-			altura = a;
-			System.out.println("Altura set: " + altura);
+			this.altura = a;
+			System.out.println("Altura set: " + this.altura);
 		} else {
-			altura = 0;
+			this.altura = 0;
 			System.out.println("Valor inválido para o atributo altura. Inicializando com zero.");
 		}
 	}
 	
 	public double getLargura() {
-		return largura;
+		return this.largura;
 	}
 	
 	public double getAltura() {
-		return altura;
+		return this.altura;
 	}
 	
 	public void calculaPerimetro(double l, double a) {
 		double perimetro;
 		if (l > 0 && a > 0) {
-			
 			perimetro = 2 * (l + a);
+			
 			System.out.println("Perímetro: " +  perimetro);
 		}
 	}
