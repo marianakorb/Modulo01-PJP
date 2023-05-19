@@ -7,38 +7,38 @@ public class MaiorDeDoisNumeros {
 	
 	// Construtor sem parametro
 	public MaiorDeDoisNumeros() {
-		primNum = 0;
-		primNum = 0;
-		System.out.println("Construtor sem parametro: " + primNum + " e " + segNum);
+		this.primNum = 0;
+		this.segNum = 0;
+		System.out.println("Construtor sem parametro: " + this.primNum + " e " + this.segNum);
 	}
 	
 	// Construtor com parametro
 	public MaiorDeDoisNumeros(double n1, double n2) {
-		primNum = n1;
-		segNum = n2;
-		System.out.println("Construtor com parametro: " + primNum + " e " + segNum);
+		this.primNum = n1;
+		this.segNum = n2;
+		System.out.println("Construtor com parametro: " + this.primNum + " e " + this.segNum);
 	}
 	
 	public void setPrimNum(double n1) {
-		primNum = n1;
-		System.out.println("n1 set: " + n1);
+		this.primNum = n1;
+		System.out.println("n1 set: " + this.primNum);
 	}
 	
 	public void setSegNum(double n2) {
-		segNum = n2;
-		System.out.println("n2 set: " + n2);
+		this.segNum = n2;
+		System.out.println("n2 set: " + this.segNum);
 	}
 	
 	public double getPrimNum() {
-		return primNum;
+		return this.primNum;
 	}
 	
 	public double getSegNum() {
-		return segNum;
+		return this.segNum;
 	}
 	
 	public void verificarMaior() {
-		if(primNum >= segNum) {
+		if(this.primNum >= this.segNum) {
 			System.out.println("O número num1 é maior ou igual a num2");
 		} else {
 			System.out.println("O número num2 é maior que num1");
