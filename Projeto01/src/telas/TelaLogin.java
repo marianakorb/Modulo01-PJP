@@ -10,11 +10,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaLogin extends JFrame {
 
@@ -89,23 +92,37 @@ public class TelaLogin extends JFrame {
 		senhaLabel.setFont(new Font("Verdana", Font.PLAIN, 12));
 		senhaLabel.setBounds(35, 157, 46, 14);
 		panel.add(senhaLabel);
-		
-		JButton entrarBtn = new JButton("ENTRAR");
-		entrarBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
-		entrarBtn.setBounds(35, 220, 164, 23);
-		panel.add(entrarBtn);
-		
+			
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Verdana", Font.PLAIN, 12));
 		passwordField.setBounds(35, 172, 164, 20);
 		panel.add(passwordField);
-		entrarBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaInfo telaInfo = new TelaInfo();
-				telaInfo.setVisible(true);
-				dispose();
+		
+		JButton entrarBtn = new JButton("ENTRAR");
+		entrarBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
+		entrarBtn.setBounds(35, 220, 164, 23);
+	
+		// Validação de login
+		entrarBtn.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				if (checkLogin( loginField.getText(), new String(passwordField.getPassword()))) {
+
+					TelaInfo telaInfo = new TelaInfo();
+					telaInfo.setVisible(true);
+					dispose();
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
+					
+				}
 			}
+			
+			public boolean checkLogin(String login, String senha) {
+					return login.equals("2301") && senha.equals("1234");
+				}
 		});
+		panel.add(entrarBtn);
 			
 		
 	}
