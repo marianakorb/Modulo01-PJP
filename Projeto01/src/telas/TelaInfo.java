@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Cursor;
 
 public class TelaInfo extends JFrame {
 
@@ -35,19 +36,20 @@ public class TelaInfo extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaInfo() {
-		MedidaBounds valor = new MedidaBounds();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, valor.w, valor.h);
+		setBounds(100, 100, 1222, 804);
+		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(199, 253, 138));
+		contentPane.setBackground(new Color(193, 219, 221));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton vendasBtn = new JButton("Vendas");
+		vendasBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		vendasBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		vendasBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -56,10 +58,11 @@ public class TelaInfo extends JFrame {
 				dispose();
 			}
 		});
-		vendasBtn.setBounds(357, 125, 166, 56);
+		vendasBtn.setBounds(111, 422, 166, 56);
 		contentPane.add(vendasBtn);
 		
 		JButton clientesBtn = new JButton("Clientes ");
+		clientesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		clientesBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		clientesBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,10 +71,11 @@ public class TelaInfo extends JFrame {
 				dispose();
 			}
 		});
-		clientesBtn.setBounds(357, 203, 166, 56);
+		clientesBtn.setBounds(365, 422, 166, 56);
 		contentPane.add(clientesBtn);
 		
 		JButton estoqueBtn = new JButton("Estoque");
+		estoqueBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		estoqueBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		estoqueBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -80,10 +84,11 @@ public class TelaInfo extends JFrame {
 				dispose();
 			}
 		});
-		estoqueBtn.setBounds(357, 283, 166, 56);
+		estoqueBtn.setBounds(627, 422, 166, 56);
 		contentPane.add(estoqueBtn);
 		
 		JButton consultaVendasBtn = new JButton("Consulta Vendas");
+		consultaVendasBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		consultaVendasBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		consultaVendasBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -92,10 +97,11 @@ public class TelaInfo extends JFrame {
 				dispose();
 			}
 		});
-		consultaVendasBtn.setBounds(357, 364, 166, 56);
+		consultaVendasBtn.setBounds(873, 422, 166, 56);
 		contentPane.add(consultaVendasBtn);
 		
 		JButton sairBtn = new JButton("Sair");
+		sairBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		sairBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
 		sairBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,7 +110,7 @@ public class TelaInfo extends JFrame {
 				dispose();
 			}
 		});
-		sairBtn.setBounds(787, 530, 89, 23);
+		sairBtn.setBounds(1079, 710, 89, 23);
 		contentPane.add(sairBtn);
 		
 		
