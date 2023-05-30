@@ -115,11 +115,35 @@ public class TelaLogin extends JFrame {
 		passwordField.setBounds(58, 175, 164, 20);
 		panel.add(passwordField);
 		
+		// ao pressionar enter foca no textField da senha
+		loginField.addKeyListener(new KeyAdapter() {
+			
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					passwordField.grabFocus();
+					
+				}
+			}
+		});
+		
 		JButton entrarBtn = new JButton("ENTRAR");
 		entrarBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		entrarBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
 		entrarBtn.setBounds(57, 220, 164, 23);
 		
+		// ao pressionar enter foca no botão
+		passwordField.addKeyListener(new KeyAdapter() {
+			
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					entrarBtn.grabFocus();
+					
+				}
+			}
+			
+		});
+		
+		// valudação de login pressionando 'enter'
 		entrarBtn.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				
@@ -145,7 +169,7 @@ public class TelaLogin extends JFrame {
 			});
 	
 		
-		// Validação de login
+		// Validação de login com click
 		entrarBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 						
