@@ -12,6 +12,11 @@ import javax.swing.JComponent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -32,6 +37,10 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField loginField;
 	private JPasswordField passwordField;
+	
+	static final String DB_URL = "jdbc:mysql://localhost/sistemainternoloja";
+	static final String USER = "root";
+	static final String PASS = "root";
 
 	/**
 	 * Launch the application.
@@ -55,14 +64,6 @@ public class TelaLogin extends JFrame {
 	public TelaLogin() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		
-//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//		
-//		int screenWidth = (int) screenSize.getWidth();
-//
-//		int screenHeight = (int) screenSize.getHeight();
-//		
-//		setBounds(100, 100, screenWidth, screenHeight);
 		
 		setBounds(100, 100, 1222, 804);
 		setLocationRelativeTo(null);
@@ -127,6 +128,41 @@ public class TelaLogin extends JFrame {
 		});
 		
 		JButton entrarBtn = new JButton("ENTRAR");
+		entrarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int idUsuario = Integer.parseInt(loginField.getText());
+				String QUERY = "SELECT senha FROM funcionarios WHERE id=";
+				QUERY = QUERY + String.valueOf(idUsuario);
+				String senhaTextField = String.valueOf(passwordField.getPassword());
+				try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				         Statement stmt = conn.createStatement();
+						
+				         ResultSet rs = stmt.executeQuery(QUERY);
+				      ) {		      
+						while(rs.next()){
+							String senha = String.valueOf(rs.getInt("senha"));
+				            System.out.println(senhaTextField);
+				            System.out.println(senha);
+				        
+				             if (senha.equals(senhaTextField)) {
+				            
+				            	 TelaInfo telaInfo = new TelaInfo();
+				            	 telaInfo.setVisible(true);
+				            	 dispose();
+				            	 
+				             } else {
+				            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
+				            	 
+				             }
+						}    
+				         
+				      } catch (SQLException el) {
+				         el.printStackTrace();
+				      }
+					}
+			
+		});
 		entrarBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		entrarBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
 		entrarBtn.setBounds(57, 220, 164, 23);
@@ -144,52 +180,83 @@ public class TelaLogin extends JFrame {
 		});
 		
 		// valudação de login pressionando 'enter'
-		entrarBtn.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == 10) {
-					
-					if (checkLogin( loginField.getText(), new String(passwordField.getPassword()))) {
-						
-						TelaInfo telaInfo = new TelaInfo();
-						telaInfo.setVisible(true);
-						dispose();
-						
-					} else {
-						JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
-						
-					}
-				}
-			}
-			
-				public boolean checkLogin(String login, String senha) {
-					return login.equals("2301") && senha.equals("1234");
-			
-				}
-			});
-	
+//		entrarBtn.addKeyListener(new KeyAdapter() {
+//			public void keyPressed(KeyEvent e) {
+//				
+//				if(e.getKeyCode() == 10) {
+//					
+//					int idUsuario = Integer.parseInt(loginField.getText());
+//					String QUERY = "SELECT senha FROM funcionarios WHERE id=";
+//					QUERY = QUERY + String.valueOf(idUsuario);
+//					String senhaTextField = String.valueOf(passwordField.getPassword());
+//					try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//					         Statement stmt = conn.createStatement();
+//							
+//					         ResultSet rs = stmt.executeQuery(QUERY);
+//					      ) {		      
+//							while(rs.next()){
+//								String senha = String.valueOf(rs.getInt("senha"));
+//					            System.out.println(senhaTextField);
+//					            System.out.println(senha);
+//					        
+//					             if (senha.equals(senhaTextField)) {
+//					            
+//					            	 TelaInfo telaInfo = new TelaInfo();
+//					            	 telaInfo.setVisible(true);
+//					            	 dispose();
+//					            	 
+//					             } else {
+//					            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
+//					            	 
+//					             }
+//							}    
+//					         
+//					      } catch (SQLException el) {
+//					         el.printStackTrace();
+//					      }
+//					
+//				}
+//			}
+//			
+//				
+//			});
+//	
 		
 		// Validação de login com click
 		entrarBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 						
-				if (checkLogin( loginField.getText(), new String(passwordField.getPassword()))) {
-
-						TelaInfo telaInfo = new TelaInfo();
-						telaInfo.setVisible(true);
-						dispose();
-							
-				} else {
-						JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
-							
-				}
-			}
-					
-			public boolean checkLogin(String login, String senha) {
-				return login.equals("2301") && senha.equals("1234");
+				int idUsuario = Integer.parseInt(loginField.getText());
+				String QUERY = "SELECT senha FROM funcionarios WHERE id=";
+				QUERY = QUERY + String.valueOf(idUsuario);
+				String senhaTextField = String.valueOf(passwordField.getPassword());
+				try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				         Statement stmt = conn.createStatement();
+						
+				         ResultSet rs = stmt.executeQuery(QUERY);
+				      ) {		      
+						while(rs.next()){
+							String senha = String.valueOf(rs.getInt("senha"));
+				      
+				        
+				             if (senha.equals(senhaTextField)) {
+				            
+				            	 TelaInfo telaInfo = new TelaInfo();
+				            	 telaInfo.setVisible(true);
+				            	 dispose();
+				            	 
+				             } else {
+				            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
+				            	 
+				             }
+						}    
+				         
+				      } catch (SQLException el) {
+				         el.printStackTrace();
+				      }
 			}
 		});
 		panel.add(entrarBtn);
 		
-	}
+		}
 }
