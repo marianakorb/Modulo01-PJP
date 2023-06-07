@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -20,15 +22,27 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.SwingConstants;
+import javax.swing.JList;
+import javax.swing.JEditorPane;
 
 public class TelaVendas extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField vendedorTextField;
 	private JTextField cfpClienteTextField;
-	private JTextField clienteTextField;
-	private JTextField quantidadeTextField;
+	private JTextField quantidadeText;
 
+	 static final String DB_URL = "jdbc:mysql://localhost/sistemainternoloja";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	/**
 	 * Launch the application.
 	 */
@@ -84,7 +98,7 @@ public class TelaVendas extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(193, 219, 221));
-		panel.setBounds(10, 11, 1186, 709);
+		panel.setBounds(10, 21, 1186, 709);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -94,6 +108,7 @@ public class TelaVendas extends JFrame {
 		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 13));
 		
 		vendedorTextField = new JTextField();
+		
 		vendedorTextField.setBounds(221, 85, 194, 20);
 		panel.add(vendedorTextField);
 		vendedorTextField.setColumns(10);
@@ -115,17 +130,47 @@ public class TelaVendas extends JFrame {
 		panel.add(cfpClienteTextField);
 		cfpClienteTextField.setColumns(10);
 		
-		clienteTextField = new JTextField();
-		clienteTextField.setBounds(221, 148, 194, 20);
-		panel.add(clienteTextField);
-		clienteTextField.setColumns(10);
-		
 		JButton pesquisarButton = new JButton("Pesquisar");
+		pesquisarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String vendedor = vendedorTextField.getText();
+				
+				String QUERY = "SELECT id, nome FROM funcionarios WHERE id=";
+				QUERY = QUERY + String.valueOf(vendedor);
+				
+				try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				         Statement stmt = conn.createStatement();
+						
+				         ResultSet rs = stmt.executeQuery(QUERY);
+				      ) {		      
+					
+						while(rs.next()){					           
+								
+				             if (Integer.parseInt(vendedor) == rs.getInt("id")) {
+				            	 
+				            	 String nome = rs.getString("nome");
+				            	 vendedorTextField.setText(nome);
+				            	 
+				             } else {
+				             
+			             JOptionPane.showMessageDialog(null, "Funcionário não cadastrado!");
+			            
+				             }
+				             break;
+				       } 
+				         
+				      } catch (SQLException el) {
+				         el.printStackTrace();
+				      }
+			}
+		});
 		pesquisarButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		pesquisarButton.setBounds(450, 147, 89, 23);
+		pesquisarButton.setBounds(445, 84, 89, 23);
 		panel.add(pesquisarButton);
 		
 		JTextField produtoTextField = new JTextField();
+		
 		produtoTextField.setBounds(146, 228, 269, 20);
 		panel.add(produtoTextField);
 		produtoTextField.setColumns(10);
@@ -138,10 +183,10 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_5.setBounds(464, 231, 75, 14);
 		panel.add(lblNewLabel_5);
 		
-		quantidadeTextField = new JTextField();
-		quantidadeTextField.setBounds(535, 228, 105, 20);
-		panel.add(quantidadeTextField);
-		quantidadeTextField.setColumns(10);
+		quantidadeText = new JTextField();
+		quantidadeText.setBounds(555, 228, 105, 20);
+		panel.add(quantidadeText);
+		quantidadeText.setColumns(10);
 		
 		JButton btnNewButton_1 = new JButton("Pagamento");
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -167,43 +212,39 @@ public class TelaVendas extends JFrame {
 		btnNewButton_4.setBounds(46, 646, 105, 37);
 		panel.add(btnNewButton_4);
 		
-		JLabel protudoLabel = new JLabel("");
-		protudoLabel.setOpaque(true);
-		protudoLabel.setForeground(new Color(255, 255, 255));
-		protudoLabel.setBackground(new Color(255, 255, 255));
-		protudoLabel.setBounds(85, 326, 66, 245);
-		panel.add(protudoLabel);
+		JLabel itemLabel = new JLabel("");
+		itemLabel.setOpaque(true);
+		itemLabel.setForeground(new Color(255, 255, 255));
+		itemLabel.setBackground(new Color(255, 255, 255));
+		itemLabel.setBounds(85, 326, 66, 245);
+		panel.add(itemLabel);
 		
-		JLabel lblNewLabel_5_1 = new JLabel("");
-		lblNewLabel_5_1.setOpaque(true);
-		lblNewLabel_5_1.setBackground(Color.WHITE);
-		lblNewLabel_5_1.setBounds(164, 326, 457, 245);
-		panel.add(lblNewLabel_5_1);
+		JLabel quantLabel = new JLabel("");
+		quantLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		quantLabel.setVerticalAlignment(SwingConstants.TOP);
+		quantLabel.setOpaque(true);
+		quantLabel.setBackground(Color.WHITE);
+		quantLabel.setBounds(631, 326, 56, 245);
+		panel.add(quantLabel);
 		
-		JLabel lblNewLabel_5_2 = new JLabel("");
-		lblNewLabel_5_2.setOpaque(true);
-		lblNewLabel_5_2.setBackground(Color.WHITE);
-		lblNewLabel_5_2.setBounds(631, 326, 56, 245);
-		panel.add(lblNewLabel_5_2);
+		JLabel precoUnLabel = new JLabel("");
+		precoUnLabel.setOpaque(true);
+		precoUnLabel.setBackground(Color.WHITE);
+		precoUnLabel.setBounds(697, 326, 99, 245);
+		panel.add(precoUnLabel);
 		
-		JLabel lblNewLabel_5_2_1 = new JLabel("");
-		lblNewLabel_5_2_1.setOpaque(true);
-		lblNewLabel_5_2_1.setBackground(Color.WHITE);
-		lblNewLabel_5_2_1.setBounds(697, 326, 99, 245);
-		panel.add(lblNewLabel_5_2_1);
-		
-		JLabel lblNewLabel_5_2_2 = new JLabel("");
-		lblNewLabel_5_2_2.setOpaque(true);
-		lblNewLabel_5_2_2.setBackground(Color.WHITE);
-		lblNewLabel_5_2_2.setBounds(806, 326, 99, 245);
-		panel.add(lblNewLabel_5_2_2);
+		JLabel precoTotalLabel = new JLabel("");
+		precoTotalLabel.setOpaque(true);
+		precoTotalLabel.setBackground(Color.WHITE);
+		precoTotalLabel.setBounds(806, 326, 99, 245);
+		panel.add(precoTotalLabel);
 		
 		JLabel lblNewLabel_6 = new JLabel("ítem");
 		lblNewLabel_6.setBounds(85, 313, 46, 14);
 		panel.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Produto");
-		lblNewLabel_7.setBounds(161, 313, 46, 14);
+		lblNewLabel_7.setBounds(161, 313, 75, 14);
 		panel.add(lblNewLabel_7);
 		
 		JLabel lblNewLabel_8 = new JLabel("Peças");
@@ -211,11 +252,125 @@ public class TelaVendas extends JFrame {
 		panel.add(lblNewLabel_8);
 		
 		JLabel lblNewLabel_9 = new JLabel("Preço un.");
-		lblNewLabel_9.setBounds(697, 313, 46, 14);
+		lblNewLabel_9.setBounds(697, 313, 64, 14);
 		panel.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("Preço Total");
-		lblNewLabel_10.setBounds(811, 313, 66, 14);
+		lblNewLabel_10.setBounds(811, 313, 75, 14);
 		panel.add(lblNewLabel_10);
+		
+		JLabel nomeClienteLabel = new JLabel("");
+		nomeClienteLabel.setOpaque(true);
+		nomeClienteLabel.setBounds(221, 151, 194, 20);
+		panel.add(nomeClienteLabel);
+		
+		JButton pesquisarCpf = new JButton("Pesquisar");
+		pesquisarCpf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cpf = cfpClienteTextField.getText();
+				
+				String QUERY = "SELECT cpf, nome FROM clientes WHERE cpf=";
+				QUERY = QUERY + cpf;
+				
+				try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				         Statement stmt = conn.createStatement();
+						
+				         ResultSet rs = stmt.executeQuery(QUERY);
+				      ) {		      
+					
+						while(rs.next()){					           
+								
+				             if (rs.getString("cpf").equals(cpf)) {
+				            	 
+				            	 String nome = rs.getString("nome");
+				           
+				            	 nomeClienteLabel.setText(nome);
+				            	 
+				             } else {
+				            	 
+				            	Opcao telaOp = new Opcao();
+				 				telaOp.setVisible(true);
+				            	
+				             }
+				             break;
+				       } 
+				         
+				      } catch (SQLException el) {
+				         el.printStackTrace();
+				      }
+			}
+		});
+		pesquisarCpf.setBounds(445, 115, 89, 23);
+		panel.add(pesquisarCpf);
+		
+		
+		JButton pesquisarProdutoBtn = new JButton("pesquisar");
+		pesquisarProdutoBtn.setBounds(672, 227, 89, 23);
+		panel.add(pesquisarProdutoBtn);
+		
+		JTextPane produtosLabel2 = new JTextPane();
+		produtosLabel2.setBounds(157, 327, 464, 245);
+		panel.add(produtosLabel2);
+		pesquisarProdutoBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String refProduto = produtoTextField.getText();
+				String quantidade = quantidadeText.getText();
+				
+				String QUERY = "SELECT * FROM produtos WHERE referencia=";
+				QUERY = QUERY + refProduto;
+				
+				try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				         Statement stmt = conn.createStatement();
+						
+				         ResultSet rs = stmt.executeQuery(QUERY);
+				      ) {		      
+					
+						while(rs.next()){					           
+								
+				             if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
+				            	 String produtoAnterior = produtosLabel2.getText();
+				            	 	
+				            	 
+				            	 String nome = rs.getString("nome");
+				            	 int cor = rs.getInt("cor");				            	
+				            	 String tamanho = rs.getString("tamanho");
+//				            	 String prodAnterior = nome + " " + tamanho + " " + cor;
+				            	 
+				            	 String prodAtual = nome + " " + tamanho + " " + cor;
+				            	 System.out.println("pane:" +produtoAnterior);
+				            	 System.out.println("bd: " + nome);
+				            	 String prodAtual_2 = produtoAnterior  + "\n " + nome;
+				            	 System.out.println("atual: " + prodAtual_2);
+				            	 
+				            	 produtosLabel2.setText(prodAtual_2);
+				            	 
+				            	 
+				            	 if (!quantidade.isEmpty()) {
+				                        quantLabel.setText(quantidade);
+				                    } else {
+				                    	quantLabel.setText("1");
+				                    }
+				            	 
+				            	 break;
+				             } else {
+				             
+				            	 JOptionPane.showMessageDialog(null, "Produto não cadastrado!");
+				            	 break;
+				             }		             			         
+				             
+				             }
+						
+			
+				      } catch (SQLException el) {
+				         el.printStackTrace();
+				      }
+				
+				
+				
+				
+				}
+		});
+		
 	}
 }
