@@ -9,6 +9,11 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -24,19 +29,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.Cursor;
+import javax.swing.JTextArea;
+import javax.swing.border.TitledBorder;
+import java.awt.Component;
 
 public class TelaEstoque extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField pesquisatextField;
-	private JTable table;
-	private JTextField idtextField;
-	private JTextField produtotextField;
-	private JTextField precotextField;
-	private JTextField tamanhotextField;
-	private JTextField cortextField;
-	private JTextField textField_5;
+	private JTextField refText;
+	private JTextField prodText;
+	private JTextField precoText;
+	private JTextField tamanhoText;
+	private JTextField corText;
+	private JTextField txtPesquisaProd;
 
+	   static final String DB_URL = "jdbc:mysql://127.0.0.1/escola";
+	   static final String USER = "root";
+	   static final String PASS = "root";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -99,25 +110,90 @@ public class TelaEstoque extends JFrame {
 		contentPane.add(pesquisatextField);
 		pesquisatextField.setColumns(10);
 		
+		JTextArea lblRef = new JTextArea();
+		lblRef.setBounds(39, 148, 94, 212);
+		panel.add(lblRef);
+		
+		JTextArea lblProduto = new JTextArea();
+		lblProduto.setBounds(135, 148, 336, 212);
+		panel.add(lblProduto);
+		
+		JTextArea lblP = new JTextArea();
+		lblP.setBounds(473, 148, 46, 212);
+		panel.add(lblP);
+		
+		JTextArea lblPreco = new JTextArea();
+		lblPreco.setBounds(665, 148, 86, 212);
+		panel.add(lblPreco);
+		
+		JTextArea lblM = new JTextArea();
+		lblM.setBounds(521, 148, 46, 212);
+		panel.add(lblM);
+		
+		JTextArea lblG = new JTextArea();
+		lblG.setBounds(569, 148, 46, 212);
+		panel.add(lblG);
+		
+		JTextArea lblGG = new JTextArea();
+		lblGG.setBounds(617, 148, 46, 212);
+		panel.add(lblGG);
+		
+	// procura produto no BD e exibe na tabela as informações do estoque
 		JButton pesquisaButton = new JButton("PESQUISAR");
+		pesquisaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent el) {
+				 int ref = Integer.parseInt(txtPesquisaProd.getText());
+				 
+				 String QUERY = "SELECT * FROM produtos";
+				 try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				         Statement stmt = conn.createStatement();
+				         ResultSet rs = stmt.executeQuery(QUERY);
+				      ) {		      
+				         while(rs.next()){				        	 				        	 
+				        	 
+				            if (ref == rs.getInt("referencia")) {
+				            	String nome = rs.getString("nome");				  
+				            	String cor = retornaCor(rs.getInt("cor"));
+				            	String preco = String.valueOf(rs.getBigDecimal("preco"));
+				            	
+				            	// area referencia				           
+				            	lblProduto.setText(String.valueOf(ref));
+				            	
+				            	// area nome do produto				           
+				            	lblProduto.setText(nome + " " + cor);
+				            	
+				            	// area tamanho P
+				            	
+				            	// area tamanho M
+				            	
+				            	// area tamanho G
+				            	
+				            	// area tamanho GG
+				            	
+				            	// area preço
+				            	lblPreco.setText(preco);
+				            } else {
+				            	lblProduto.setText("Produto não encontrado.");
+				            }
+				         }
+				         
+				      } catch (SQLException e) {
+				         e.printStackTrace();
+				      } 								 
+				 }
+			
+			public String retornaCor(int cor) {
+				String cores[] = {"Bege", "Preto", "Branco", "Azul", "Verde", "Cinza"};
+				
+				String c = cores[cor];
+					
+				return c;
+			}
+		});
 		pesquisaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		pesquisaButton.setFont(new Font("Verdana", Font.PLAIN, 11));
-		pesquisaButton.setBounds(359, 104, 112, 23);
+		pesquisaButton.setBounds(337, 57, 112, 23);
 		panel.add(pesquisaButton);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(61, 163, 691, 203);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "PRODUTO", "COR", "P", "M", "G", "GG", "PRE\u00C7O"
-			}
-		));
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 377, 742, 2);
@@ -128,7 +204,7 @@ public class TelaEstoque extends JFrame {
 		lblNewLabel.setBounds(61, 419, 232, 14);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("ID");
+		JLabel lblNewLabel_1 = new JLabel("REF");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setBounds(208, 512, 27, 14);
 		panel.add(lblNewLabel_1);
@@ -151,28 +227,73 @@ public class TelaEstoque extends JFrame {
 		lblNewLabel_4.setBounds(167, 564, 69, 14);
 		panel.add(lblNewLabel_4);
 		
-		idtextField = new JTextField();
-		idtextField.setFont(new Font("Verdana", Font.PLAIN, 11));
-		idtextField.setBounds(245, 508, 196, 20);
-		panel.add(idtextField);
-		idtextField.setColumns(10);
+		refText = new JTextField();
+		refText.setFont(new Font("Verdana", Font.PLAIN, 11));
+		refText.setBounds(245, 508, 196, 20);
+		panel.add(refText);
+		refText.setColumns(10);
 		
-		produtotextField = new JTextField();
-		produtotextField.setBounds(559, 509, 299, 20);
-		panel.add(produtotextField);
-		produtotextField.setColumns(10);
+		prodText = new JTextField();
+		prodText.setBounds(559, 509, 299, 20);
+		panel.add(prodText);
+		prodText.setColumns(10);
 		
-		precotextField = new JTextField();
-		precotextField.setBounds(739, 562, 119, 20);
-		panel.add(precotextField);
-		precotextField.setColumns(10);
+		precoText = new JTextField();
+		precoText.setBounds(739, 562, 119, 20);
+		panel.add(precoText);
+		precoText.setColumns(10);
 		
-		tamanhotextField = new JTextField();
-		tamanhotextField.setBounds(246, 562, 86, 20);
-		panel.add(tamanhotextField);
-		tamanhotextField.setColumns(10);
+		tamanhoText = new JTextField();
+		tamanhoText.setBounds(246, 562, 86, 20);
+		panel.add(tamanhoText);
+		tamanhoText.setColumns(10);
 		
+		corText = new JTextField();
+		corText.setBounds(462, 562, 148, 20);
+		panel.add(corText);
+		corText.setColumns(10);
+		
+		txtPesquisaProd = new JTextField();
+		txtPesquisaProd.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtPesquisaProd.setBounds(39, 57, 288, 20);
+		panel.add(txtPesquisaProd);
+		txtPesquisaProd.setColumns(10);
+		
+		// Adiciona novo produto no banco de dados
 		JButton salvarButton = new JButton("SALVAR");
+		salvarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent el) {
+					String QUERY = "SELECT referencia FROM produtos";
+				
+					int ref = Integer.parseInt(refText.getText());
+					int cor = Integer.parseInt(corText.getText());
+					String nomeProd = prodText.getText();
+					String tamanho = tamanhoText.getText();
+					float preco = Float.parseFloat(precoText.getText());
+					
+					// Open a connection
+			      try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			    	Statement stmt = conn.createStatement();
+			    	ResultSet rs = stmt.executeQuery(QUERY);
+			      ) {		      
+			         // Execute a query
+			    	  while(rs.next()){
+			    		  if(ref == rs.getInt("referencia") ) {
+			    			  System.out.println("Número de referência em uso.");
+			    		  } else {
+			    			  
+			    			  System.out.println("Inserindo dados em tabela");
+			    			  
+			    			  String sql = "INSERT INTO produtos VALUES (" + ref + "," + cor + "," +  nomeProd + "," + tamanho + "," + preco + ")";
+			    			  stmt.executeUpdate(sql);  	  
+			    		  }
+			    	  }
+			         
+			      } catch (SQLException e) {
+			         e.printStackTrace();
+			      } 
+			}
+		});
 		salvarButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		salvarButton.setBounds(957, 640, 89, 35);
 		panel.add(salvarButton);
@@ -183,15 +304,63 @@ public class TelaEstoque extends JFrame {
 		lblNewLabel_5.setBounds(683, 564, 46, 14);
 		panel.add(lblNewLabel_5);
 		
-		cortextField = new JTextField();
-		cortextField.setBounds(462, 562, 148, 20);
-		panel.add(cortextField);
-		cortextField.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Verdana", Font.PLAIN, 11));
-		textField_5.setBounds(61, 105, 288, 20);
-		panel.add(textField_5);
-		textField_5.setColumns(10);
+		JLabel lblNewLabel_6 = new JLabel("Referência");
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		lblNewLabel_6.setBackground(new Color(192, 192, 192));
+		lblNewLabel_6.setOpaque(true);
+		lblNewLabel_6.setBounds(39, 133, 94, 14);
+		panel.add(lblNewLabel_6);
+		
+		
+		JLabel lblNewLabel_6_1 = new JLabel("Produto");
+		lblNewLabel_6_1.setOpaque(true);
+		lblNewLabel_6_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6_1.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_6_1.setAlignmentX(1.0f);
+		lblNewLabel_6_1.setBounds(137, 133, 334, 14);
+		panel.add(lblNewLabel_6_1);
+		
+		JLabel lblNewLabel_6_2 = new JLabel("P");
+		lblNewLabel_6_2.setOpaque(true);
+		lblNewLabel_6_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6_2.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_6_2.setAlignmentX(1.0f);
+		lblNewLabel_6_2.setBounds(473, 133, 46, 14);
+		panel.add(lblNewLabel_6_2);
+		
+		JLabel lblNewLabel_6_2_1 = new JLabel("M");
+		lblNewLabel_6_2_1.setOpaque(true);
+		lblNewLabel_6_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6_2_1.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_6_2_1.setAlignmentX(1.0f);
+		lblNewLabel_6_2_1.setBounds(521, 133, 46, 14);
+		panel.add(lblNewLabel_6_2_1);
+		
+		JLabel lblNewLabel_6_2_2 = new JLabel("G");
+		lblNewLabel_6_2_2.setOpaque(true);
+		lblNewLabel_6_2_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6_2_2.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_6_2_2.setAlignmentX(1.0f);
+		lblNewLabel_6_2_2.setBounds(569, 133, 46, 14);
+		panel.add(lblNewLabel_6_2_2);
+		
+		JLabel lblNewLabel_6_2_3 = new JLabel("GG");
+		lblNewLabel_6_2_3.setOpaque(true);
+		lblNewLabel_6_2_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6_2_3.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_6_2_3.setAlignmentX(1.0f);
+		lblNewLabel_6_2_3.setBounds(617, 133, 46, 14);
+		panel.add(lblNewLabel_6_2_3);
+		
+		JLabel lblNewLabel_6_2_4 = new JLabel("Preço");
+		lblNewLabel_6_2_4.setOpaque(true);
+		lblNewLabel_6_2_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6_2_4.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_6_2_4.setAlignmentX(1.0f);
+		lblNewLabel_6_2_4.setBounds(665, 133, 84, 14);
+		panel.add(lblNewLabel_6_2_4);
+		
 	}
 }
