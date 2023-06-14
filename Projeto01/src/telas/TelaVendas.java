@@ -39,9 +39,9 @@ import javax.swing.event.AncestorEvent;
 public class TelaVendas extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField vendedorTextField;
-	private JTextField cfpClienteTextField;
-	private JTextField quantidadeText;
+	private JTextField txtVendedorVenda;
+	private JTextField txtCpfClienteVenda;
+	private JTextField txtQuantVenda;
 
 	 static final String DB_URL = "jdbc:mysql://localhost/sistemainternoloja";
 	   static final String USER = "root";
@@ -52,10 +52,10 @@ public class TelaVendas extends JFrame {
 	   private JTextField textField_3;
 	   private JTextField textField_4;
 	   private JTextField textField_5;
-	   private JTextField textField_6;
-	   private JTextField textField_7;
-	   private JTextField textField_8;
-	   private JTextField textField_11;
+	   private JTextField txtPesquisaProduto;
+	   private JTextField txtRefEstoque;
+	   private JTextField txtProdutoEstoque;
+	   private JTextField txtPrecoEstoque;
 	   private JTextField textField_12;
 	   private JTextField textField_13;
 	   private JTextField textField_14;
@@ -70,14 +70,14 @@ public class TelaVendas extends JFrame {
 	   private JTextField textField_23;
 	   private JTextField textField_24;
 	   private JTextField textField_25;
-	   private JTextField textField_26;
-	   private JTextField textField_27;
-	   private JTextField textField_28;
-	   private JTextField textField_29;
-	   private JTextField textField_30;
-	   private JTextField textField_31;
-	   private JTextField textField_32;
-	   private JTextField txtQuant;
+	   private JTextField txtConsultaVenda;
+	   private JTextField txtCupomFiscal;
+	   private JTextField txtData;
+	   private JTextField txtCpf;
+	   private JTextField txtNomeCliente;
+	   private JTextField txtTotalDaVenda;
+	   private JTextField txtVendedor;
+	   private JTextField txtQuantEstoque;
 	/**
 	 * Launch the application.
 	 */
@@ -133,11 +133,11 @@ public class TelaVendas extends JFrame {
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 13));
 		
-		vendedorTextField = new JTextField();
+		txtVendedorVenda = new JTextField();
 		
-		vendedorTextField.setBounds(221, 85, 194, 20);
-		panel.add(vendedorTextField);
-		vendedorTextField.setColumns(10);
+		txtVendedorVenda.setBounds(221, 85, 194, 20);
+		panel.add(txtVendedorVenda);
+		txtVendedorVenda.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Vendedor");
 		lblNewLabel_1.setBounds(157, 88, 66, 14);
@@ -147,16 +147,16 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_2.setBounds(145, 119, 66, 14);
 		panel.add(lblNewLabel_2);
 		
-		cfpClienteTextField = new JTextField();
-		cfpClienteTextField.setBounds(221, 116, 194, 20);
-		panel.add(cfpClienteTextField);
-		cfpClienteTextField.setColumns(10);
+		txtCpfClienteVenda = new JTextField();
+		txtCpfClienteVenda.setBounds(221, 116, 194, 20);
+		panel.add(txtCpfClienteVenda);
+		txtCpfClienteVenda.setColumns(10);
 		
 		JButton pesquisarButton = new JButton("Pesquisar");
 		pesquisarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String vendedor = vendedorTextField.getText();
+				String vendedor = txtVendedorVenda.getText();
 				
 				String QUERY = "SELECT id, nome FROM funcionarios WHERE id=";
 				QUERY = QUERY + String.valueOf(vendedor);
@@ -172,7 +172,7 @@ public class TelaVendas extends JFrame {
 				             if (Integer.parseInt(vendedor) == rs.getInt("id")) {
 				            	 
 				            	 String nome = rs.getString("nome");
-				            	 vendedorTextField.setText(nome);
+				            	 txtVendedorVenda.setText(nome);
 				            	 
 				             } else {
 				             
@@ -191,11 +191,11 @@ public class TelaVendas extends JFrame {
 		pesquisarButton.setBounds(445, 84, 89, 23);
 		panel.add(pesquisarButton);
 		
-		JTextField produtoTextField = new JTextField();
+		JTextField txtRefVenda = new JTextField();
 		
-		produtoTextField.setBounds(146, 228, 269, 20);
-		panel.add(produtoTextField);
-		produtoTextField.setColumns(10);
+		txtRefVenda.setBounds(146, 228, 269, 20);
+		panel.add(txtRefVenda);
+		txtRefVenda.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("PRODUTO");
 		lblNewLabel_4.setBounds(85, 231, 66, 14);
@@ -205,17 +205,17 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_5.setBounds(425, 232, 31, 14);
 		panel.add(lblNewLabel_5);
 		
-		quantidadeText = new JTextField();
-		quantidadeText.setBounds(454, 229, 46, 20);
-		panel.add(quantidadeText);
-		quantidadeText.setColumns(10);
-		quantidadeText.setText("1");
+		txtQuantVenda = new JTextField();
+		txtQuantVenda.setBounds(454, 229, 46, 20);
+		panel.add(txtQuantVenda);
+		txtQuantVenda.setColumns(10);
+		txtQuantVenda.setText("1");
 		
-		JButton btnNewButton_1 = new JButton("Pagamento");
-		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton_1.setFont(new Font("Verdana", Font.PLAIN, 12));
-		btnNewButton_1.setBounds(981, 646, 121, 37);
-		panel.add(btnNewButton_1);
+		JButton btnPagamentoVenda = new JButton("Pagamento");
+		btnPagamentoVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnPagamentoVenda.setFont(new Font("Verdana", Font.PLAIN, 12));
+		btnPagamentoVenda.setBounds(981, 646, 121, 37);
+		panel.add(btnPagamentoVenda);
 		
 		JButton btnNewButton_3 = new JButton("Cancelar");
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -245,15 +245,15 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_10.setBounds(811, 313, 75, 14);
 		panel.add(lblNewLabel_10);
 		
-		JLabel nomeClienteLabel = new JLabel("");
-		nomeClienteLabel.setOpaque(true);
-		nomeClienteLabel.setBounds(221, 151, 194, 20);
-		panel.add(nomeClienteLabel);
+		JLabel lblNomeClienteVenda = new JLabel("");
+		lblNomeClienteVenda.setOpaque(true);
+		lblNomeClienteVenda.setBounds(221, 151, 194, 20);
+		panel.add(lblNomeClienteVenda);
 		
 		JButton pesquisarCpf = new JButton("Pesquisar");
 		pesquisarCpf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String cpf = cfpClienteTextField.getText();
+				String cpf = txtCpfClienteVenda.getText();
 				
 				String QUERY = "SELECT cpf, nome FROM clientes WHERE cpf=";
 				QUERY = QUERY + cpf;
@@ -270,7 +270,7 @@ public class TelaVendas extends JFrame {
 				            	 
 				            	 String nome = rs.getString("nome");
 				           
-				            	 nomeClienteLabel.setText(nome);
+				            	 lblNomeClienteVenda.setText(nome);
 				            	 
 				             } else {
 				            	 
@@ -289,9 +289,9 @@ public class TelaVendas extends JFrame {
 		pesquisarCpf.setBounds(445, 115, 89, 23);
 		panel.add(pesquisarCpf);
 		
-		JTextPane produtosLabel2 = new JTextPane();
-		produtosLabel2.setBounds(157, 327, 464, 245);
-		panel.add(produtosLabel2);
+		JTextPane lblProdutosVenda = new JTextPane();
+		lblProdutosVenda.setBounds(157, 327, 464, 245);
+		panel.add(lblProdutosVenda);
 		
 		
 		JPanel panel_2 = new JPanel();
@@ -436,20 +436,24 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_6_2_4.setBounds(528, 133, 84, 14);
 		panel_2.add(lblNewLabel_6_2_4);
 		
-		JButton pesquisarProdutoBtn_1 = new JButton("pesquisar");
-		JTextArea quantLabel = new JTextArea();
-		quantLabel.setBounds(629, 326, 58, 245);
-		panel.add(quantLabel);
+		JButton btnAdicionarProdutoVenda = new JButton("pesquisar");
+		JTextArea lblQuantVendas = new JTextArea();
+		lblQuantVendas.setBounds(629, 326, 58, 245);
+		panel.add(lblQuantVendas);
 		
-		JTextArea areaPrecoUn = new JTextArea();
-		areaPrecoUn.setBounds(697, 327, 75, 234);
-		panel.add(areaPrecoUn);
+		JTextArea lblPrecoUnVendas = new JTextArea();
+		lblPrecoUnVendas.setBounds(697, 327, 75, 234);
+		panel.add(lblPrecoUnVendas); 
 		
-		pesquisarProdutoBtn_1.addActionListener(new ActionListener() {
+		JTextArea lblPrecoTotVenda = new JTextArea();
+		lblPrecoTotVenda.setBounds(795, 327, 75, 234);
+		panel.add(lblPrecoTotVenda);
+		
+		btnAdicionarProdutoVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String refProduto = produtoTextField.getText();
-				String quantidade = quantidadeText.getText();
+				String refProduto = txtRefVenda.getText();
+				String quantidade = txtQuantVenda.getText();
 				
 				String QUERY = "SELECT * FROM produtos WHERE referencia=";
 				QUERY = QUERY + refProduto;
@@ -463,10 +467,9 @@ public class TelaVendas extends JFrame {
 						while(rs.next()){					           
 								
 				             if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
-				            	 produtoTextField.setText("");
-				            	 quantidadeText.setText("1");
+				            	 txtRefVenda.setText("");
 				            	 
-				            	 String produtoAnterior = produtosLabel2.getText();
+				            	 String produtoAnterior = lblProdutosVenda.getText();
 				            	 					            	 
 				            	 String nome = rs.getString("nome");
 				            	 double preco = rs.getDouble("preco");
@@ -480,29 +483,29 @@ public class TelaVendas extends JFrame {
 				            	 String prodAtual_2 = produtoAnterior  + "\n " + nome;
 				            	 System.out.println("atual: " + prodAtual_2);
 				            	 
-				            	 produtosLabel2.setText(prodAtual_2);
+				            	 lblProdutosVenda.setText(prodAtual_2);
 				            	 
-				            	 // printa quantidade
-				            	 String quantAnterior = quantLabel.getText();
-				            	 String quantAtual =quantidadeText.getText();
+				            	 // printa quantidade				            
+				            	 
+				            	 String quantAnterior = lblQuantVendas.getText();
+				            	 
+				            	 String quantAtual = txtQuantVenda.getText();
 				            
 				            	 String quantAtual_2 = quantAnterior  + "\n " + quantAtual;
 				            	 
-				            	 quantLabel.setText(quantAtual_2);
+				            	 lblQuantVendas.setText(quantAtual_2);
 				            	 
 				            	 // printa preco
 				            	 
-				            	 String precoAnterior = areaPrecoUn.getText();
+				            	 String precoAnterior = lblPrecoUnVendas.getText();
 				            	 
 				            	 String precoAtual = String.valueOf(preco);
 				            	 
 				            	 String precoAtual_2 = precoAnterior + "\n" + precoAtual;
 				            	 
-				            	 areaPrecoUn.setText(precoAtual_2);
+				            	 lblPrecoUnVendas.setText(precoAtual_2);
 				            	 
-				            	 
-				            	 double total = preco * Integer.parseInt(quantidade);
-				            	 
+				            	 // preco total 				            
 				            	 
 				            	 
 //				            	 if (!quantidade.isEmpty()) {
@@ -512,6 +515,7 @@ public class TelaVendas extends JFrame {
 //				                    }
 //				            	 
 				            	 break;
+				            	 
 				             } else {
 				             
 				            	 JOptionPane.showMessageDialog(null, "Produto não cadastrado!");
@@ -527,21 +531,23 @@ public class TelaVendas extends JFrame {
 				
 			}
 		});
-		pesquisarProdutoBtn_1.setBounds(509, 228, 89, 23);
-		panel.add(pesquisarProdutoBtn_1);
+		btnAdicionarProdutoVenda.setBounds(509, 228, 89, 23);
+		panel.add(btnAdicionarProdutoVenda);
 		
-		JTextArea precoTotaltxt = new JTextArea();
-		precoTotaltxt.setBounds(697, 582, 208, 37);
-		panel.add(precoTotaltxt);
+		JTextArea txtTotalVenda = new JTextArea();
+		txtTotalVenda.setBounds(697, 582, 208, 37);
+		panel.add(txtTotalVenda);
 		
 		JLabel lblNewLabel_3 = new JLabel("total");
 		lblNewLabel_3.setBounds(629, 587, 46, 14);
 		panel.add(lblNewLabel_3);
 		
 		
-		JTextArea areaPrecoTot = new JTextArea();
-		areaPrecoTot.setBounds(795, 327, 75, 234);
-		panel.add(areaPrecoTot);
+		
+		JButton btnConsultarPreco = new JButton("Consultar Preço");
+		btnConsultarPreco.setFont(new Font("Verdana", Font.PLAIN, 12));
+		btnConsultarPreco.setBounds(279, 646, 136, 37);
+		panel.add(btnConsultarPreco);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Clientes", null, panel_3, null);
@@ -738,116 +744,104 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_13.setBounds(1006, 11, 170, 14);
 		panel_6.add(lblNewLabel_13);
 		
-		textField_26 = new JTextField();
-		textField_26.setColumns(10);
-		textField_26.setBounds(70, 68, 233, 20);
-		panel_6.add(textField_26);
+		txtConsultaVenda = new JTextField();
+		txtConsultaVenda.setColumns(10);
+		txtConsultaVenda.setBounds(70, 68, 233, 20);
+		panel_6.add(txtConsultaVenda);
 		
 		JLabel cupomFiscalLabel = new JLabel("CUPOM FISCAL");
 		cupomFiscalLabel.setFont(new Font("Verdana", Font.PLAIN, 11));
 		cupomFiscalLabel.setBounds(70, 143, 115, 14);
 		panel_6.add(cupomFiscalLabel);
 		
-		textField_27 = new JTextField();
-		textField_27.setColumns(10);
-		textField_27.setBounds(68, 160, 233, 20);
-		panel_6.add(textField_27);
+		txtCupomFiscal = new JTextField();
+		txtCupomFiscal.setColumns(10);
+		txtCupomFiscal.setBounds(68, 160, 233, 20);
+		panel_6.add(txtCupomFiscal);
 		
 		JLabel dataLabel = new JLabel("DATA");
 		dataLabel.setBounds(347, 144, 46, 14);
 		panel_6.add(dataLabel);
 		
-		textField_28 = new JTextField();
-		textField_28.setColumns(10);
-		textField_28.setBounds(347, 160, 135, 20);
-		panel_6.add(textField_28);
+		txtData = new JTextField();
+		txtData.setColumns(10);
+		txtData.setBounds(347, 160, 135, 20);
+		panel_6.add(txtData);
 		
-		textField_29 = new JTextField();
-		textField_29.setColumns(10);
-		textField_29.setBounds(68, 216, 233, 20);
-		panel_6.add(textField_29);
+		txtCpf = new JTextField();
+		txtCpf.setColumns(10);
+		txtCpf.setBounds(68, 216, 233, 20);
+		panel_6.add(txtCpf);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("CPF");
-		lblNewLabel_1_3.setBounds(68, 201, 46, 14);
-		panel_6.add(lblNewLabel_1_3);
+		JLabel lblcpf = new JLabel("CPF");
+		lblcpf.setBounds(68, 201, 46, 14);
+		panel_6.add(lblcpf);
 		
-		JLabel lblNewLabel_2_3 = new JLabel("CLIENTE");
-		lblNewLabel_2_3.setBounds(347, 201, 64, 14);
-		panel_6.add(lblNewLabel_2_3);
+		JLabel lblnomecliente = new JLabel("CLIENTE");
+		lblnomecliente.setBounds(347, 201, 64, 14);
+		panel_6.add(lblnomecliente);
 		
-		textField_30 = new JTextField();
-		textField_30.setColumns(10);
-		textField_30.setBounds(347, 216, 308, 20);
-		panel_6.add(textField_30);
+		txtNomeCliente = new JTextField();
+		txtNomeCliente.setColumns(10);
+		txtNomeCliente.setBounds(347, 216, 308, 20);
+		panel_6.add(txtNomeCliente);
 		
 		JButton btnNewButton_1_2 = new JButton("Pesquisar");
 		btnNewButton_1_2.setBounds(304, 67, 89, 23);
 		panel_6.add(btnNewButton_1_2);
 		
-		JButton btnNewButton_2_1 = new JButton("Limpar");
-		btnNewButton_2_1.setFont(new Font("Verdana", Font.PLAIN, 12));
-		btnNewButton_2_1.setBounds(68, 645, 89, 32);
-		panel_6.add(btnNewButton_2_1);
+		JButton btnLimparConsVenda = new JButton("Limpar");
+		btnLimparConsVenda.setFont(new Font("Verdana", Font.PLAIN, 12));
+		btnLimparConsVenda.setBounds(68, 645, 89, 32);
+		panel_6.add(btnLimparConsVenda);
 		
-		textField_31 = new JTextField();
-		textField_31.setColumns(10);
-		textField_31.setBounds(809, 604, 128, 20);
-		panel_6.add(textField_31);
+		txtTotalDaVenda = new JTextField();
+		txtTotalDaVenda.setColumns(10);
+		txtTotalDaVenda.setBounds(809, 604, 128, 20);
+		panel_6.add(txtTotalDaVenda);
 		
 		JLabel lblNewLabel_3_3 = new JLabel("Total");
 		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_3_3.setBounds(947, 606, 46, 14);
 		panel_6.add(lblNewLabel_3_3);
 		
-		textField_32 = new JTextField();
-		textField_32.setColumns(10);
-		textField_32.setBounds(68, 604, 192, 20);
-		panel_6.add(textField_32);
+		txtVendedor = new JTextField();
+		txtVendedor.setColumns(10);
+		txtVendedor.setBounds(68, 604, 192, 20);
+		panel_6.add(txtVendedor);
 		
 		JLabel lblNewLabel_4_3 = new JLabel("Vendedor");
 		lblNewLabel_4_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_4_3.setBounds(270, 606, 64, 14);
 		panel_6.add(lblNewLabel_4_3);
 		
-		JLabel lblNewLabel_5_3 = new JLabel("");
-		lblNewLabel_5_3.setOpaque(true);
-		lblNewLabel_5_3.setBackground(Color.WHITE);
-		lblNewLabel_5_3.setBounds(177, 330, 100, 212);
-		panel_6.add(lblNewLabel_5_3);
+		JLabel panelTxtProduto = new JLabel("");
+		panelTxtProduto.setOpaque(true);
+		panelTxtProduto.setBackground(Color.WHITE);
+		panelTxtProduto.setBounds(177, 330, 509, 212);
+		panel_6.add(panelTxtProduto);
 		
-		JLabel lblNewLabel_5_1_1 = new JLabel("");
-		lblNewLabel_5_1_1.setOpaque(true);
-		lblNewLabel_5_1_1.setBackground(Color.WHITE);
-		lblNewLabel_5_1_1.setBounds(68, 330, 99, 212);
-		panel_6.add(lblNewLabel_5_1_1);
+		JLabel panelTxtPreco = new JLabel("");
+		panelTxtPreco.setOpaque(true);
+		panelTxtPreco.setBackground(Color.WHITE);
+		panelTxtPreco.setBounds(695, 330, 128, 212);
+		panel_6.add(panelTxtPreco);
 		
-		JLabel lblNewLabel_5_2_1 = new JLabel("");
-		lblNewLabel_5_2_1.setOpaque(true);
-		lblNewLabel_5_2_1.setBackground(Color.WHITE);
-		lblNewLabel_5_2_1.setBounds(290, 330, 509, 212);
-		panel_6.add(lblNewLabel_5_2_1);
+		JLabel lblref = new JLabel("Ref.");
+		lblref.setBounds(68, 314, 46, 14);
+		panel_6.add(lblref);
 		
-		JLabel lblNewLabel_5_3_1 = new JLabel("");
-		lblNewLabel_5_3_1.setOpaque(true);
-		lblNewLabel_5_3_1.setBackground(Color.WHITE);
-		lblNewLabel_5_3_1.setBounds(809, 330, 128, 212);
-		panel_6.add(lblNewLabel_5_3_1);
-		
-		JLabel lblNewLabel_6_3 = new JLabel("Ref.");
-		lblNewLabel_6_3.setBounds(68, 314, 46, 14);
-		panel_6.add(lblNewLabel_6_3);
-		
-		JLabel lblNewLabel_7_1 = new JLabel("Cor");
-		lblNewLabel_7_1.setBounds(177, 314, 46, 14);
-		panel_6.add(lblNewLabel_7_1);
-		
-		JLabel lblNewLabel_8_1 = new JLabel("Produto");
-		lblNewLabel_8_1.setBounds(290, 314, 46, 14);
-		panel_6.add(lblNewLabel_8_1);
+		JLabel lblproduto = new JLabel("Produto");
+		lblproduto.setBounds(177, 314, 46, 14);
+		panel_6.add(lblproduto);
 		
 		JLabel lblNewLabel_9_1 = new JLabel("Preço");
-		lblNewLabel_9_1.setBounds(809, 314, 46, 14);
+		lblNewLabel_9_1.setBounds(699, 314, 46, 14);
 		panel_6.add(lblNewLabel_9_1);
+		
+		JTextArea panelTxtRef = new JTextArea();
+		panelTxtRef.setBounds(70, 330, 97, 212);
+		panel_6.add(panelTxtRef);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Estoque", null, panel_1, null);
@@ -904,16 +898,16 @@ public class TelaVendas extends JFrame {
 		lblPreco_1.setBounds(537, 114, 86, 75);
 		panel_1.add(lblPreco_1);
 		
-		textField_6 = new JTextField();
-		textField_6.setFont(new Font("Verdana", Font.PLAIN, 11));
-		textField_6.setColumns(10);
-		textField_6.setBounds(48, 68, 288, 20);
-		panel_1.add(textField_6);
+		txtPesquisaProduto = new JTextField();
+		txtPesquisaProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtPesquisaProduto.setColumns(10);
+		txtPesquisaProduto.setBounds(48, 68, 288, 20);
+		panel_1.add(txtPesquisaProduto);
 		
-		JButton pesquisaButton_1 = new JButton("PESQUISAR");
-		pesquisaButton_1.setFont(new Font("Verdana", Font.PLAIN, 11));
-		pesquisaButton_1.setBounds(346, 68, 112, 23);
-		panel_1.add(pesquisaButton_1);
+		JButton btnPesquisaProduto = new JButton("PESQUISAR");
+		btnPesquisaProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
+		btnPesquisaProduto.setBounds(346, 68, 112, 23);
+		panel_1.add(btnPesquisaProduto);
 		
 		JLabel estoqueLabel_1 = new JLabel("ESTOQUE");
 		estoqueLabel_1.setFont(new Font("Verdana", Font.BOLD, 15));
@@ -924,12 +918,12 @@ public class TelaVendas extends JFrame {
 		separator_1.setBounds(10, 403, 742, 2);
 		panel_1.add(separator_1);
 		
-		JButton salvarButton_1_1 = new JButton("ATUALIZAR");
-		salvarButton_1_1.setBounds(346, 241, 89, 35);
-		panel_1.add(salvarButton_1_1);
+		JButton btnAtualizarEstoque = new JButton("ATUALIZAR");
+		btnAtualizarEstoque.setBounds(512, 241, 109, 35);
+		panel_1.add(btnAtualizarEstoque);
 		
-		JButton salvarButton_1_1_1 = new JButton("EXCLUIR");
-		salvarButton_1_1_1.addActionListener(new ActionListener() {
+		JButton btnExcluirEstoque = new JButton("EXCLUIR");
+		btnExcluirEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				ExcluirOuNao telaExcluir = new ExcluirOuNao();
@@ -938,87 +932,87 @@ public class TelaVendas extends JFrame {
 
 			}
 		});
-		salvarButton_1_1_1.setBounds(53, 241, 89, 35);
-		panel_1.add(salvarButton_1_1_1);
+		btnExcluirEstoque.setBounds(53, 241, 89, 35);
+		panel_1.add(btnExcluirEstoque);
 		
-		JPanel panel_produto = new JPanel();
-		panel_produto.setBounds(10, 429, 704, 192);
-		panel_1.add(panel_produto);
-		panel_produto.setLayout(null);
-		panel_produto.setVisible(false);
+		JPanel panel_estoque = new JPanel();
+		panel_estoque.setBounds(10, 429, 704, 192);
+		panel_1.add(panel_estoque);
+		panel_estoque.setLayout(null);
+		panel_estoque.setVisible(false);
 		
-		JLabel lblFuncao = new JLabel("");
-		lblFuncao.setBounds(13, 11, 232, 14);
-		panel_produto.add(lblFuncao);
-		lblFuncao.setFont(new Font("Verdana", Font.BOLD, 12));
+		JLabel lblFuncaoEstoque = new JLabel("");
+		lblFuncaoEstoque.setBounds(13, 11, 232, 14);
+		panel_estoque.add(lblFuncaoEstoque);
+		lblFuncaoEstoque.setFont(new Font("Verdana", Font.BOLD, 12));
 		
-		salvarButton_1_1.addActionListener(new ActionListener() {
+		btnAtualizarEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel_produto.setVisible(true);
-				lblFuncao.setText("ATUALIZAR PRODUTO");
+				panel_estoque.setVisible(true);
+				lblFuncaoEstoque.setText("ATUALIZAR PRODUTO");
 			}
 		});
 		
 		// CADSTRAR NOVO PRODUTO
-		JButton salvarButton_1_1_2 = new JButton("INSERIR");
-		salvarButton_1_1_2.addActionListener(new ActionListener() {
+		JButton btnCadastrarEstoque = new JButton("CADASTRAR");
+		btnCadastrarEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				lblFuncao.setText("CADASTRAR NOVO PRODUTO");
-				panel_produto.setVisible(true);
+				lblFuncaoEstoque.setText("CADASTRAR NOVO PRODUTO");
+				panel_estoque.setVisible(true);
 			}
 		});
-		salvarButton_1_1_2.setBounds(211, 241, 89, 35);
-		panel_1.add(salvarButton_1_1_2);
+		btnCadastrarEstoque.setBounds(265, 241, 109, 35);
+		panel_1.add(btnCadastrarEstoque);
 		
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(127, 51, 196, 20);
-		panel_produto.add(textField_7);
-		textField_7.setFont(new Font("Verdana", Font.PLAIN, 11));
-		textField_7.setColumns(10);
+		txtRefEstoque = new JTextField();
+		txtRefEstoque.setBounds(127, 51, 196, 20);
+		panel_estoque.add(txtRefEstoque);
+		txtRefEstoque.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtRefEstoque.setColumns(10);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("REF");
 		lblNewLabel_1_2.setBounds(79, 55, 27, 14);
-		panel_produto.add(lblNewLabel_1_2);
+		panel_estoque.add(lblNewLabel_1_2);
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("PRODUTO");
 		lblNewLabel_2_2.setBounds(48, 96, 69, 14);
-		panel_produto.add(lblNewLabel_2_2);
+		panel_estoque.add(lblNewLabel_2_2);
 		lblNewLabel_2_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_2_2.setFont(new Font("Verdana", Font.PLAIN, 11));
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(127, 94, 363, 20);
-		panel_produto.add(textField_8);
-		textField_8.setColumns(10);
+		txtProdutoEstoque = new JTextField();
+		txtProdutoEstoque.setBounds(127, 94, 363, 20);
+		panel_estoque.add(txtProdutoEstoque);
+		txtProdutoEstoque.setColumns(10);
 		
 		JLabel lblNewLabel_5_2 = new JLabel("PREÇO");
 		lblNewLabel_5_2.setBounds(60, 144, 46, 14);
-		panel_produto.add(lblNewLabel_5_2);
+		panel_estoque.add(lblNewLabel_5_2);
 		lblNewLabel_5_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_5_2.setFont(new Font("Verdana", Font.PLAIN, 11));
 		
-		textField_11 = new JTextField();
-		textField_11.setBounds(126, 138, 119, 20);
-		panel_produto.add(textField_11);
-		textField_11.setColumns(10);
+		txtPrecoEstoque = new JTextField();
+		txtPrecoEstoque.setBounds(126, 138, 119, 20);
+		panel_estoque.add(txtPrecoEstoque);
+		txtPrecoEstoque.setColumns(10);
 		
 		JLabel lblNewLabel_5_2_2 = new JLabel("QNTD.");
 		lblNewLabel_5_2_2.setBounds(317, 145, 46, 14);
-		panel_produto.add(lblNewLabel_5_2_2);
+		panel_estoque.add(lblNewLabel_5_2_2);
 		lblNewLabel_5_2_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_5_2_2.setFont(new Font("Verdana", Font.PLAIN, 11));
 		
-		txtQuant = new JTextField();
-		txtQuant.setBounds(373, 142, 119, 20);
-		panel_produto.add(txtQuant);
-		txtQuant.setColumns(10);
+		txtQuantEstoque = new JTextField();
+		txtQuantEstoque.setBounds(373, 142, 119, 20);
+		panel_estoque.add(txtQuantEstoque);
+		txtQuantEstoque.setColumns(10);
 		
-		JButton salvarButton_1 = new JButton("SALVAR");
-		salvarButton_1.setBounds(585, 135, 89, 35);
-		panel_produto.add(salvarButton_1);
+		JButton btnSalvarEstoque = new JButton("Salvar");
+		btnSalvarEstoque.setBounds(585, 135, 89, 35);
+		panel_estoque.add(btnSalvarEstoque);
 		
 		
 		JButton btnNewButton = new JButton("Sair");
