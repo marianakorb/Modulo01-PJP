@@ -78,6 +78,8 @@ public class TelaVendas extends JFrame {
 	   private JTextField txtTotalDaVenda;
 	   private JTextField txtVendedor;
 	   private JTextField txtQuantEstoque;
+	   private double venda = 0;
+
 	/**
 	 * Launch the application.
 	 */
@@ -101,13 +103,7 @@ public class TelaVendas extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//
-//		int screenWidth = (int) screenSize.getWidth();
-//
-//		int screenHeight = (int) screenSize.getHeight();
-//		
-//		setBounds(100, 100, screenWidth, screenHeight);
+
 		
 		setBounds(100, 100, 1222, 804);
 		setLocationRelativeTo(null);
@@ -147,6 +143,12 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_2.setBounds(145, 119, 66, 14);
 		panel.add(lblNewLabel_2);
 		
+		txtQuantVenda = new JTextField();
+		txtQuantVenda.setBounds(454, 229, 46, 20);
+		panel.add(txtQuantVenda);
+		txtQuantVenda.setColumns(10);
+		txtQuantVenda.setText("1");
+		
 		txtCpfClienteVenda = new JTextField();
 		txtCpfClienteVenda.setBounds(221, 116, 194, 20);
 		panel.add(txtCpfClienteVenda);
@@ -176,7 +178,7 @@ public class TelaVendas extends JFrame {
 				            	 
 				             } else {
 				             
-			             JOptionPane.showMessageDialog(null, "Funcionário não cadastrado!");
+				            	 JOptionPane.showMessageDialog(null, "Funcionário não cadastrado!");
 			            
 				             }
 				             break;
@@ -192,6 +194,16 @@ public class TelaVendas extends JFrame {
 		panel.add(pesquisarButton);
 		
 		JTextField txtRefVenda = new JTextField();
+		txtRefVenda.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					txtQuantVenda.grabFocus();
+					
+				}
+			}
+		});
+		
 		
 		txtRefVenda.setBounds(146, 228, 269, 20);
 		panel.add(txtRefVenda);
@@ -205,11 +217,6 @@ public class TelaVendas extends JFrame {
 		lblNewLabel_5.setBounds(425, 232, 31, 14);
 		panel.add(lblNewLabel_5);
 		
-		txtQuantVenda = new JTextField();
-		txtQuantVenda.setBounds(454, 229, 46, 20);
-		panel.add(txtQuantVenda);
-		txtQuantVenda.setColumns(10);
-		txtQuantVenda.setText("1");
 		
 		JButton btnPagamentoVenda = new JButton("Pagamento");
 		btnPagamentoVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -242,7 +249,7 @@ public class TelaVendas extends JFrame {
 		panel.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("Preço Total");
-		lblNewLabel_10.setBounds(811, 313, 75, 14);
+		lblNewLabel_10.setBounds(782, 313, 75, 14);
 		panel.add(lblNewLabel_10);
 		
 		JLabel lblNomeClienteVenda = new JLabel("");
@@ -442,12 +449,16 @@ public class TelaVendas extends JFrame {
 		panel.add(lblQuantVendas);
 		
 		JTextArea lblPrecoUnVendas = new JTextArea();
-		lblPrecoUnVendas.setBounds(697, 327, 75, 234);
+		lblPrecoUnVendas.setBounds(697, 327, 75, 245);
 		panel.add(lblPrecoUnVendas); 
 		
 		JTextArea lblPrecoTotVenda = new JTextArea();
-		lblPrecoTotVenda.setBounds(795, 327, 75, 234);
+		lblPrecoTotVenda.setBounds(782, 327, 88, 245);
 		panel.add(lblPrecoTotVenda);
+		
+		JTextArea txtTotalVenda = new JTextArea();
+		txtTotalVenda.setBounds(664, 582, 208, 37);
+		panel.add(txtTotalVenda);
 		
 		btnAdicionarProdutoVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -469,19 +480,12 @@ public class TelaVendas extends JFrame {
 				             if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
 				            	 txtRefVenda.setText("");
 				            	 
-				            	 String produtoAnterior = lblProdutosVenda.getText();
-				            	 					            	 
+				            	 // printa o produto
+				            	 String produtoAnterior = lblProdutosVenda.getText();				            	 					            	 
 				            	 String nome = rs.getString("nome");
-				            	 double preco = rs.getDouble("preco");
-				            	 
-				            	 //int cor = rs.getInt("cor");				            	
-				            	// String tamanho = rs.getString("tamanho");
-//				            	 String prodAnterior = nome + " " + tamanho + " " + cor;
-				            	 
-				            	 String prodAtual = nome;
-				            	 
-				            	 String prodAtual_2 = produtoAnterior  + "\n " + nome;
-				            	 System.out.println("atual: " + prodAtual_2);
+				            	 double preco = rs.getDouble("preco");				            	 						            	 
+				            	 String prodAtual = nome;				            	 
+				            	 String prodAtual_2 = produtoAnterior  + "\n " + nome;				            	
 				            	 
 				            	 lblProdutosVenda.setText(prodAtual_2);
 				            	 
@@ -505,16 +509,29 @@ public class TelaVendas extends JFrame {
 				            	 
 				            	 lblPrecoUnVendas.setText(precoAtual_2);
 				            	 
-				            	 // preco total 				            
-				            	 
-				            	 
-//				            	 if (!quantidade.isEmpty()) {
-//				                        quantLabel.setText(quantidade);
-//				                    } else {
-//				                    	quantLabel.setText("1");
-//				                    }
-//				            	 
-				            	 break;
+				            	 // preco total 				            				            			            		
+				            		 				            		 
+				            	String totalAnterior = lblPrecoTotVenda.getText();
+				            	
+				            	double totalAtual = Double.parseDouble(precoAtual) * Integer.parseInt(quantAtual);				            					            				            	
+				            	
+				            	lblPrecoTotVenda.setText(totalAnterior + "\n" + String.format("%.2f", totalAtual));
+				            	
+				            	// venda total
+//				            	String vendaAnterior = txtTotalVenda.getText();
+				            	
+				            	if (totalAnterior.isEmpty()) {
+				            		venda = venda + totalAtual;
+				            		txtTotalVenda.setText(String.format("%.2f", venda));
+				            		
+				            	} else {
+				            		
+				            		venda = venda + totalAtual;				            		
+				            		txtTotalVenda.setText(String.format("%.2f", venda));
+				            		
+				            	}				            	
+				            					            	 				            	 
+				            	 break; 
 				            	 
 				             } else {
 				             
@@ -522,7 +539,7 @@ public class TelaVendas extends JFrame {
 				            	 break;
 				             }		             			         
 				             
-				             }
+						}
 						
 			
 				      } catch (SQLException el) {
@@ -534,17 +551,20 @@ public class TelaVendas extends JFrame {
 		btnAdicionarProdutoVenda.setBounds(509, 228, 89, 23);
 		panel.add(btnAdicionarProdutoVenda);
 		
-		JTextArea txtTotalVenda = new JTextArea();
-		txtTotalVenda.setBounds(697, 582, 208, 37);
-		panel.add(txtTotalVenda);
 		
 		JLabel lblNewLabel_3 = new JLabel("total");
 		lblNewLabel_3.setBounds(629, 587, 46, 14);
 		panel.add(lblNewLabel_3);
 		
 		
-		
+		// CONSULTA PREÇO
 		JButton btnConsultarPreco = new JButton("Consultar Preço");
+		btnConsultarPreco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				new ConsultaPreco().setVisible(true);
+			}
+		});
 		btnConsultarPreco.setFont(new Font("Verdana", Font.PLAIN, 12));
 		btnConsultarPreco.setBounds(279, 646, 136, 37);
 		panel.add(btnConsultarPreco);
