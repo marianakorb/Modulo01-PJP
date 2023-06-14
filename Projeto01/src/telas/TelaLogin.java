@@ -154,21 +154,20 @@ public class TelaLogin extends JFrame {
 					String QUERY = "SELECT senha FROM funcionarios WHERE id=";
 					QUERY = QUERY + String.valueOf(idUsuario);
 					String senhaTextField = String.valueOf(passwordField.getPassword());
+					
 					try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 					         Statement stmt = conn.createStatement();
 							
 					         ResultSet rs = stmt.executeQuery(QUERY);
 					      ) {		      
 							while(rs.next()){
-								String senha = String.valueOf(rs.getInt("senha"));
-					            System.out.println(senhaTextField);
-					            System.out.println(senha);
+								String senha = rs.getString("senha");					            
 					        
 					             if (senha.equals(senhaTextField)) {
-					            
-					            	 TelaInfo telaInfo = new TelaInfo();
-					            	 telaInfo.setVisible(true);
-					            	 dispose();
+					            	 
+					            	 TelaVendas telaVendas = new TelaVendas();
+					 				telaVendas.setVisible(true);
+					 				dispose();
 					            	 
 					            	 break;
 					             } else {
@@ -206,10 +205,10 @@ public class TelaLogin extends JFrame {
 				        
 				             if (senha.equals(senhaTextField)) {
 				            
-				            	 TelaInfo telaInfo = new TelaInfo();
-				            	 telaInfo.setVisible(true);
-				            	 dispose();
-				            	 
+				            	 TelaVendas telaVendas = new TelaVendas();
+				 				telaVendas.setVisible(true);
+				 				dispose();
+				 				
 				             } else {
 				            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
 				            	 
