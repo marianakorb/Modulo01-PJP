@@ -53,7 +53,8 @@ public class ExcluirOuNao extends JDialog {
 				JButton simButton = new JButton("Sim");
 				simButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						// drop produto do estoque
+						
+						
 					}
 				});
 				simButton.setActionCommand("OK");
