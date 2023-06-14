@@ -128,99 +128,64 @@ public class TelaLogin extends JFrame {
 		});
 		
 		JButton entrarBtn = new JButton("ENTRAR");
-		entrarBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int idUsuario = Integer.parseInt(loginField.getText());
-				String QUERY = "SELECT senha FROM funcionarios WHERE id=";
-				QUERY = QUERY + String.valueOf(idUsuario);
-				String senhaTextField = String.valueOf(passwordField.getPassword());
-				try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-				         Statement stmt = conn.createStatement();
-						
-				         ResultSet rs = stmt.executeQuery(QUERY);
-				      ) {		      
-						while(rs.next()){
-							String senha = String.valueOf(rs.getInt("senha"));
-				            System.out.println(senhaTextField);
-				            System.out.println(senha);
-				        
-				             if (senha.equals(senhaTextField)) {
-				            
-				            	 TelaInfo telaInfo = new TelaInfo();
-				            	 telaInfo.setVisible(true);
-				            	 dispose();
-				            	 
-				             } else {
-				            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
-				            	 
-				             }
-						}    
-				         
-				      } catch (SQLException el) {
-				         el.printStackTrace();
-				      }
-					}
-			
-		});
 		entrarBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		entrarBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
 		entrarBtn.setBounds(57, 220, 164, 23);
 		
-		// ao pressionar enter foca no botão
-		passwordField.addKeyListener(new KeyAdapter() {
-			
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == 10) {
-					entrarBtn.grabFocus();
-					
-				}
-			}
-			
-		});
-		
-		// valudação de login pressionando 'enter'
-//		entrarBtn.addKeyListener(new KeyAdapter() {
+//		// ao pressionar enter foca no botão
+//		passwordField.addKeyListener(new KeyAdapter() {
+//			
 //			public void keyPressed(KeyEvent e) {
-//				
-//				if(e.getKeyCode() == 10) {
-//					
-//					int idUsuario = Integer.parseInt(loginField.getText());
-//					String QUERY = "SELECT senha FROM funcionarios WHERE id=";
-//					QUERY = QUERY + String.valueOf(idUsuario);
-//					String senhaTextField = String.valueOf(passwordField.getPassword());
-//					try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-//					         Statement stmt = conn.createStatement();
-//							
-//					         ResultSet rs = stmt.executeQuery(QUERY);
-//					      ) {		      
-//							while(rs.next()){
-//								String senha = String.valueOf(rs.getInt("senha"));
-//					            System.out.println(senhaTextField);
-//					            System.out.println(senha);
-//					        
-//					             if (senha.equals(senhaTextField)) {
-//					            
-//					            	 TelaInfo telaInfo = new TelaInfo();
-//					            	 telaInfo.setVisible(true);
-//					            	 dispose();
-//					            	 
-//					             } else {
-//					            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
-//					            	 
-//					             }
-//							}    
-//					         
-//					      } catch (SQLException el) {
-//					         el.printStackTrace();
-//					      }
+//				if (e.getKeyCode() == 10) {
+//					entrarBtn.grabFocus();
 //					
 //				}
 //			}
 //			
-//				
-//			});
-//	
+//		});
+		
+		//validação de login pressionando 'enter'
+		passwordField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode() == 10) {
+					
+					int idUsuario = Integer.parseInt(loginField.getText());
+					String QUERY = "SELECT senha FROM funcionarios WHERE id=";
+					QUERY = QUERY + String.valueOf(idUsuario);
+					String senhaTextField = String.valueOf(passwordField.getPassword());
+					try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+					         Statement stmt = conn.createStatement();
+							
+					         ResultSet rs = stmt.executeQuery(QUERY);
+					      ) {		      
+							while(rs.next()){
+								String senha = String.valueOf(rs.getInt("senha"));
+					            System.out.println(senhaTextField);
+					            System.out.println(senha);
+					        
+					             if (senha.equals(senhaTextField)) {
+					            
+					            	 TelaInfo telaInfo = new TelaInfo();
+					            	 telaInfo.setVisible(true);
+					            	 dispose();
+					            	 
+					            	 break;
+					             } else {
+					            	 JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
+					            	 
+					             }
+							}    
+					         
+					      } catch (SQLException el) {
+					         el.printStackTrace();
+					      }
+					
+				}
+			}
+			
+				
+			});	
 		
 		// Validação de login com click
 		entrarBtn.addMouseListener(new MouseAdapter() {
