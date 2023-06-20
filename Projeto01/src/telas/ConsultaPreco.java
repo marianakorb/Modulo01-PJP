@@ -22,6 +22,7 @@ import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
 
 public class ConsultaPreco extends JFrame {
 
@@ -54,6 +55,7 @@ public class ConsultaPreco extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 811, 564);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(38, 147, 166));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 
@@ -61,12 +63,14 @@ public class ConsultaPreco extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setLayout(null);
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		panel.setBounds(32, 11, 735, 491);
+		panel.setBounds(31, 25, 735, 477);
 		contentPane.add(panel);
 		
 		txtProduto = new JTextField();
+		txtProduto.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		
 		txtProduto.addKeyListener(new KeyAdapter() {
 			@Override
@@ -83,12 +87,14 @@ public class ConsultaPreco extends JFrame {
 		panel.add(txtProduto);
 		
 		JLabel lblProduto = new JLabel("");
+		lblProduto.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		lblProduto.setOpaque(true);
 		lblProduto.setBackground(Color.WHITE);
-		lblProduto.setBounds(40, 188, 635, 135);
+		lblProduto.setBounds(40, 176, 635, 135);
 		panel.add(lblProduto);
 		
 		JLabel lblPreco = new JLabel("");
+		lblPreco.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		lblPreco.setOpaque(true);
 		lblPreco.setBackground(Color.WHITE);
 		lblPreco.setBounds(508, 334, 164, 40);
@@ -96,7 +102,8 @@ public class ConsultaPreco extends JFrame {
 		
 		//pesquisa produto
 		JButton PesquisarPrecoButton = new JButton("Pesquisar");
-		PesquisarPrecoButton.setBounds(575, 123, 97, 21);
+		PesquisarPrecoButton.setFont(new Font("Dubai", Font.PLAIN, 15));
+		PesquisarPrecoButton.setBounds(575, 118, 97, 30);
 		panel.add(PesquisarPrecoButton);
 		
 		PesquisarPrecoButton.addActionListener(new ActionListener() {
@@ -140,8 +147,9 @@ public class ConsultaPreco extends JFrame {
 		
 		
 		JLabel lblNewLabel_2 = new JLabel("Valor");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(446, 352, 45, 13);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("Dubai", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(462, 334, 45, 40);
 		panel.add(lblNewLabel_2);
 		
 		JButton btnNewButton = new JButton("Sair");
@@ -150,13 +158,15 @@ public class ConsultaPreco extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.setBounds(40, 446, 100, 30);
+		btnNewButton.setFont(new Font("Dubai", Font.PLAIN, 15));
+		btnNewButton.setBounds(575, 412, 100, 30);
 		panel.add(btnNewButton);
 		
 		JLabel lblNewLabel_3 = new JLabel("CONSULTA DE PREÇO");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(250, 53, 153, 22);
+		lblNewLabel_3.setForeground(new Color(255, 207, 134));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Dubai", Font.BOLD, 20));
+		lblNewLabel_3.setBounds(228, 66, 279, 22);
 		panel.add(lblNewLabel_3);
 	}
 }
