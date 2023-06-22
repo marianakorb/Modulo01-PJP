@@ -70,6 +70,7 @@ public class ConsultaPreco extends JFrame {
 		contentPane.add(panel);
 		
 		txtProduto = new JTextField();
+		txtProduto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtProduto.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		
 		txtProduto.addKeyListener(new KeyAdapter() {
@@ -83,10 +84,11 @@ public class ConsultaPreco extends JFrame {
 			}
 		});
 		txtProduto.setColumns(10);
-		txtProduto.setBounds(40, 118, 525, 30);
+		txtProduto.setBounds(40, 118, 507, 30);
 		panel.add(txtProduto);
 		
 		JLabel lblProduto = new JLabel("");
+		lblProduto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProduto.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		lblProduto.setOpaque(true);
 		lblProduto.setBackground(Color.WHITE);
@@ -94,6 +96,8 @@ public class ConsultaPreco extends JFrame {
 		panel.add(lblProduto);
 		
 		JLabel lblPreco = new JLabel("");
+		lblPreco.setFont(new Font("Dialog", Font.PLAIN, 13));
+		lblPreco.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPreco.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		lblPreco.setOpaque(true);
 		lblPreco.setBackground(Color.WHITE);
@@ -103,7 +107,7 @@ public class ConsultaPreco extends JFrame {
 		//pesquisa produto
 		JButton PesquisarPrecoButton = new JButton("Pesquisar");
 		PesquisarPrecoButton.setFont(new Font("Dubai", Font.PLAIN, 15));
-		PesquisarPrecoButton.setBounds(575, 118, 97, 30);
+		PesquisarPrecoButton.setBounds(557, 118, 115, 30);
 		panel.add(PesquisarPrecoButton);
 		
 		PesquisarPrecoButton.addActionListener(new ActionListener() {
