@@ -30,6 +30,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+
 import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.JEditorPane;
@@ -46,6 +50,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
 import javax.swing.DropMode;
 import java.awt.ComponentOrientation;
+import javax.swing.border.SoftBevelBorder;
 
 public class TelaVendas extends JFrame {
 
@@ -198,7 +203,7 @@ public class TelaVendas extends JFrame {
 		txtVendedorVenda.setBounds(221, 85, 194, 20);
 		panel.add(txtVendedorVenda);
 		txtVendedorVenda.setColumns(10);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("vendedor");
 		lblNewLabel_1.setFont(new Font("Dubai", Font.PLAIN, 15));
 		lblNewLabel_1.setBounds(157, 88, 66, 14);
@@ -267,16 +272,18 @@ public class TelaVendas extends JFrame {
 		panel.add(pesquisarButton);
 
 		JLabel txtTotalVenda = new JLabel("");
-		txtTotalVenda.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.RAISED, null, null), "TOTAL", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 128, 255)));
+		txtTotalVenda.setFont(new Font("Dialog", Font.BOLD, 13));
+		txtTotalVenda.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.RAISED, new Color(38, 147, 166), null),
+				"TOTAL", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		txtTotalVenda.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTotalVenda.setBounds(707, 583, 150, 60);
 		panel.add(txtTotalVenda);
-		
+
 		JTextField txtRefVenda = new JTextField();
 		txtRefVenda.setFont(new Font("Dubai", Font.PLAIN, 15));
 		txtRefVenda.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		txtRefVenda.setBounds(146, 228, 269, 20);
-		
+
 		panel.add(txtRefVenda);
 		txtRefVenda.setColumns(10);
 
@@ -287,7 +294,7 @@ public class TelaVendas extends JFrame {
 
 		JLabel lblNewLabel_5 = new JLabel("qtd");
 		lblNewLabel_5.setFont(new Font("Dubai", Font.PLAIN, 15));
-		lblNewLabel_5.setBounds(425, 232, 31, 14);
+		lblNewLabel_5.setBounds(425, 229, 31, 20);
 		panel.add(lblNewLabel_5);
 
 		JLabel lblNomeClienteVenda = new JLabel("");
@@ -295,7 +302,6 @@ public class TelaVendas extends JFrame {
 		lblNomeClienteVenda.setBounds(221, 151, 194, 20);
 		lblNomeClienteVenda.setOpaque(true);
 		panel.add(lblNomeClienteVenda);
-		
 
 		JButton pesquisarCpf = new JButton("pesquisar");
 		pesquisarCpf.setFont(new Font("Dubai", Font.PLAIN, 15));
@@ -513,32 +519,27 @@ public class TelaVendas extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 207, 134)));
 		lblPrecoTotVenda.setBounds(782, 304, 75, 268);
 		panel.add(lblPrecoTotVenda);
-		
+
 		btnAdicionarProdutoVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
 
-				if (!lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty()) {
-					
-					
+				if ( !lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty() ) {
+
 					String refProduto = txtRefVenda.getText();
 					String quantidade = txtQuantVenda.getText();
 
 					String QUERY = "SELECT * FROM produtos WHERE referencia=";
 					QUERY = QUERY + refProduto;
-					
-					
-					
+
 					try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 							Statement stmt = conn.createStatement();
 
 							ResultSet rs = stmt.executeQuery(QUERY);) {
 
-						if( rs.next()) {
-							
-							do {								
-									
+						if (rs.next()) {
+
+							do {
+
 								System.out.println("aqui");
 								if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
 									txtRefVenda.setText("");
@@ -584,7 +585,7 @@ public class TelaVendas extends JFrame {
 
 									if (totalAnterior.isEmpty()) {
 										venda = venda + totalAtual;
-										txtTotalVenda.setText(String.format("%.2f", venda));								
+										txtTotalVenda.setText(String.format("%.2f", venda));
 
 									} else {
 
@@ -596,15 +597,14 @@ public class TelaVendas extends JFrame {
 
 									break;
 								}
-							}while (rs.next());
-							
-						}
-						else {
+							} while (rs.next());
+
+						} else {
 							JOptionPane.showMessageDialog(null, "Produto não cadastrado.");
 							txtRefVenda.setText("");
 							txtRefVenda.grabFocus();
 
-							}
+						}
 
 					} catch (SQLException el) {
 						el.printStackTrace();
@@ -614,11 +614,36 @@ public class TelaVendas extends JFrame {
 		});
 		panel.add(btnAdicionarProdutoVenda);
 
+		LocalDate date = LocalDate.now();
+	    DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+	    String textDate = date.format(formatters);
+	    LocalDate parsedDate = LocalDate.parse(textDate, formatters);
+		
+		
+		Calendar data = Calendar.getInstance();
+		int hora = data.get(Calendar.HOUR_OF_DAY); 
+		int min = data.get(Calendar.MINUTE);
+		int seg = data.get(Calendar.SECOND);
+		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBounds(0, 0, 1181, 57);
 		panel_7.setBackground(new Color(38, 147, 166));
 		panel.add(panel_7);
 		panel_7.setLayout(null);
+		
+				JLabel lblData = new JLabel("Data: " + textDate);
+				lblData.setForeground(new Color(255, 255, 255));
+				lblData.setBounds(1059, 11, 112, 14);
+				panel_7.add(lblData);
+				lblData.setHorizontalAlignment(SwingConstants.RIGHT);
+				lblData.setFont(new Font("Dialog", Font.PLAIN, 12));
+				
+						JLabel lblHora = new JLabel(hora +":"+min+":"+seg+ " ");
+						lblHora.setForeground(new Color(255, 255, 255));
+						lblHora.setBounds(1059, 36, 112, 14);
+						panel_7.add(lblHora);
+						lblHora.setHorizontalAlignment(SwingConstants.RIGHT);
+						lblHora.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(new Color(255, 207, 134));
@@ -648,6 +673,7 @@ public class TelaVendas extends JFrame {
 		panel_3.setLayout(null);
 
 		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		panel_4.setLayout(null);
 		panel_4.setForeground(Color.WHITE);
 		panel_4.setBackground(new Color(193, 219, 221));
@@ -663,28 +689,28 @@ public class TelaVendas extends JFrame {
 		cpfTextField.setEditable(false);
 		cpfTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		cpfTextField.setColumns(10);
-		cpfTextField.setBounds(48, 102, 196, 20);
+		cpfTextField.setBounds(41, 129, 196, 20);
 		panel_4.add(cpfTextField);
 
 		nomeTextField = new JTextField();
 		nomeTextField.setEditable(false);
 		nomeTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		nomeTextField.setColumns(10);
-		nomeTextField.setBounds(276, 102, 289, 20);
+		nomeTextField.setBounds(269, 129, 289, 20);
 		panel_4.add(nomeTextField);
 
 		cepTextField = new JTextField();
 		cepTextField.setEditable(false);
 		cepTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		cepTextField.setColumns(10);
-		cepTextField.setBounds(48, 149, 196, 20);
+		cepTextField.setBounds(41, 176, 196, 20);
 		panel_4.add(cepTextField);
 
 		enderecoTextField = new JTextField();
 		enderecoTextField.setEditable(false);
 		enderecoTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		enderecoTextField.setColumns(10);
-		enderecoTextField.setBounds(276, 149, 289, 20);
+		enderecoTextField.setBounds(269, 176, 289, 20);
 		panel_4.add(enderecoTextField);
 
 		numeroTextField = new JTextField();
@@ -692,28 +718,28 @@ public class TelaVendas extends JFrame {
 		numeroTextField.setText("");
 		numeroTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		numeroTextField.setColumns(10);
-		numeroTextField.setBounds(48, 193, 86, 20);
+		numeroTextField.setBounds(41, 220, 86, 20);
 		panel_4.add(numeroTextField);
 
 		complementoTextField = new JTextField();
 		complementoTextField.setEditable(false);
 		complementoTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		complementoTextField.setColumns(10);
-		complementoTextField.setBounds(276, 193, 166, 20);
+		complementoTextField.setBounds(269, 220, 166, 20);
 		panel_4.add(complementoTextField);
 
 		bairroTextField = new JTextField();
 		bairroTextField.setEditable(false);
 		bairroTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		bairroTextField.setColumns(10);
-		bairroTextField.setBounds(48, 239, 206, 20);
+		bairroTextField.setBounds(41, 266, 206, 20);
 		panel_4.add(bairroTextField);
 
 		cidadeTextField = new JTextField();
 		cidadeTextField.setEditable(false);
 		cidadeTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		cidadeTextField.setColumns(10);
-		cidadeTextField.setBounds(278, 239, 290, 20);
+		cidadeTextField.setBounds(271, 266, 290, 20);
 		panel_4.add(cidadeTextField);
 
 		ufTextField = new JTextField();
@@ -721,28 +747,28 @@ public class TelaVendas extends JFrame {
 		ufTextField.setText("");
 		ufTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		ufTextField.setColumns(10);
-		ufTextField.setBounds(584, 239, 86, 20);
+		ufTextField.setBounds(577, 266, 86, 20);
 		panel_4.add(ufTextField);
 
 		telefoneTextField = new JTextField();
 		telefoneTextField.setEditable(false);
 		telefoneTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		telefoneTextField.setColumns(10);
-		telefoneTextField.setBounds(45, 282, 206, 20);
+		telefoneTextField.setBounds(38, 309, 206, 20);
 		panel_4.add(telefoneTextField);
 
 		emailTextField = new JTextField();
 		emailTextField.setEditable(false);
 		emailTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		emailTextField.setColumns(10);
-		emailTextField.setBounds(276, 282, 289, 20);
+		emailTextField.setBounds(269, 309, 289, 20);
 		panel_4.add(emailTextField);
 
 		dataNascTextField = new JTextField();
 		dataNascTextField.setEditable(false);
 		dataNascTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		dataNascTextField.setColumns(10);
-		dataNascTextField.setBounds(45, 344, 206, 20);
+		dataNascTextField.setBounds(38, 371, 206, 20);
 		panel_4.add(dataNascTextField);
 
 		sexoTextField = new JTextField();
@@ -750,59 +776,59 @@ public class TelaVendas extends JFrame {
 		sexoTextField.setText("");
 		sexoTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 		sexoTextField.setColumns(10);
-		sexoTextField.setBounds(276, 344, 149, 20);
+		sexoTextField.setBounds(269, 371, 149, 20);
 		panel_4.add(sexoTextField);
 
 		JLabel sexoLabel = new JLabel("SEXO");
-		sexoLabel.setBounds(276, 329, 46, 14);
+		sexoLabel.setBounds(269, 356, 46, 14);
 		panel_4.add(sexoLabel);
 
 		JLabel cpfLabel = new JLabel("CPF");
-		cpfLabel.setBounds(48, 88, 46, 14);
+		cpfLabel.setBounds(41, 115, 46, 14);
 		panel_4.add(cpfLabel);
 
 		JLabel emailLabel = new JLabel("E-MAIL");
-		emailLabel.setBounds(276, 270, 46, 14);
+		emailLabel.setBounds(269, 297, 46, 14);
 		panel_4.add(emailLabel);
 
 		JLabel ufLabel = new JLabel("UF");
-		ufLabel.setBounds(584, 224, 46, 14);
+		ufLabel.setBounds(577, 251, 46, 14);
 		panel_4.add(ufLabel);
 
 		JLabel nomeClienteLabel_1 = new JLabel("NOME");
-		nomeClienteLabel_1.setBounds(276, 88, 46, 14);
+		nomeClienteLabel_1.setBounds(269, 115, 46, 14);
 		panel_4.add(nomeClienteLabel_1);
 
 		JLabel cepLabel = new JLabel("CEP");
-		cepLabel.setBounds(48, 133, 46, 14);
+		cepLabel.setBounds(41, 160, 46, 14);
 		panel_4.add(cepLabel);
 
 		JLabel enderecoLabel = new JLabel("ENDEREÇO");
-		enderecoLabel.setBounds(276, 133, 86, 14);
+		enderecoLabel.setBounds(269, 160, 86, 14);
 		panel_4.add(enderecoLabel);
 
 		JLabel numResidenciaLabel = new JLabel("NÚMERO");
-		numResidenciaLabel.setBounds(48, 180, 86, 14);
+		numResidenciaLabel.setBounds(41, 207, 86, 14);
 		panel_4.add(numResidenciaLabel);
 
 		JLabel complementoLabel = new JLabel("COMPLEMENTO");
-		complementoLabel.setBounds(274, 180, 137, 14);
+		complementoLabel.setBounds(267, 207, 137, 14);
 		panel_4.add(complementoLabel);
 
 		JLabel bairroLabel = new JLabel("BAIRRO");
-		bairroLabel.setBounds(48, 224, 66, 14);
+		bairroLabel.setBounds(41, 251, 66, 14);
 		panel_4.add(bairroLabel);
 
 		JLabel cidadeLabel = new JLabel("CIDADE");
-		cidadeLabel.setBounds(279, 224, 46, 14);
+		cidadeLabel.setBounds(272, 251, 46, 14);
 		panel_4.add(cidadeLabel);
 
 		JLabel telefoneLabel = new JLabel("TELEFONE");
-		telefoneLabel.setBounds(45, 270, 66, 14);
+		telefoneLabel.setBounds(38, 297, 66, 14);
 		panel_4.add(telefoneLabel);
 
 		JLabel nascimentoLabel = new JLabel("DATA NASC.");
-		nascimentoLabel.setBounds(45, 329, 86, 14);
+		nascimentoLabel.setBounds(38, 356, 86, 14);
 		panel_4.add(nascimentoLabel);
 
 		pesquisarClientesTextField = new JTextField();
@@ -819,12 +845,12 @@ public class TelaVendas extends JFrame {
 
 			}
 		});
-		limparBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
-		limparBtn.setBounds(789, 336, 95, 39);
+		limparBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
+		limparBtn.setBounds(25, 601, 95, 39);
 		panel_4.add(limparBtn);
 
 		JPanel excluirOuNaoPanel = new JPanel();
-		excluirOuNaoPanel.setBounds(210, 451, 460, 206);
+		excluirOuNaoPanel.setBounds(411, 416, 364, 155);
 		panel_4.add(excluirOuNaoPanel);
 		excluirOuNaoPanel.setLayout(null);
 		excluirOuNaoPanel.setVisible(false);
@@ -837,11 +863,12 @@ public class TelaVendas extends JFrame {
 			}
 		});
 
-		excluirBtn.setFont(new Font("Verdana", Font.PLAIN, 12));
-		excluirBtn.setBounds(910, 336, 95, 39);
+		excluirBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
+		excluirBtn.setBounds(1007, 601, 133, 39);
 		panel_4.add(excluirBtn);
 
 		JButton salvarClienteBtn = new JButton("Salvar");
+		salvarClienteBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		JButton atualizarButton = new JButton(" Atualizar Cadastro");
 		atualizarButton.setVisible(false);
@@ -855,8 +882,8 @@ public class TelaVendas extends JFrame {
 
 			}
 		});
-		atualizarButton.setFont(new Font("Verdana", Font.PLAIN, 12));
-		atualizarButton.setBounds(471, 336, 159, 39);
+		atualizarButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		atualizarButton.setBounds(988, 418, 153, 39);
 		panel_4.add(atualizarButton);
 		limparBtn.setVisible(false);
 		excluirBtn.setVisible(false);
@@ -995,7 +1022,7 @@ public class TelaVendas extends JFrame {
 
 			}
 		});
-		salvarClienteBtn.setBounds(640, 337, 123, 39);
+		salvarClienteBtn.setBounds(991, 468, 149, 39);
 		panel_4.add(salvarClienteBtn);
 
 		JButton novoCadastroBtn = new JButton("Novo Cadastro");
@@ -1007,28 +1034,29 @@ public class TelaVendas extends JFrame {
 				tornarCampoEditavel();
 			}
 		});
-		novoCadastroBtn.setBounds(406, 56, 123, 23);
+		novoCadastroBtn.setBounds(441, 55, 123, 24);
 		panel_4.add(novoCadastroBtn);
 
-		JLabel lblNewLabel_6_3 = new JLabel("   Tem certeza que deseja excluir este ítem permanentemente ");
+		JLabel lblNewLabel_6_3 = new JLabel("   Tem certeza que deseja excluir este ítem");
 		lblNewLabel_6_3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_6_3.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_6_3.setBounds(10, 32, 449, 26);
+		lblNewLabel_6_3.setBounds(10, 11, 344, 26);
 		excluirOuNaoPanel.add(lblNewLabel_6_3);
 
-		JLabel lblDoSeuEstoque_1 = new JLabel("   do seu estoque?");
+		JLabel lblDoSeuEstoque_1 = new JLabel("   permanentemente do seu estoque?");
 		lblDoSeuEstoque_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDoSeuEstoque_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblDoSeuEstoque_1.setBounds(10, 55, 425, 26);
+		lblDoSeuEstoque_1.setBounds(10, 29, 344, 26);
 		excluirOuNaoPanel.add(lblDoSeuEstoque_1);
 
 		JLabel lblOtemSer_1 = new JLabel("   O ítem será apagado. Você não poderá desfazer esta ação.");
 		lblOtemSer_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblOtemSer_1.setFont(new Font("Dialog", Font.PLAIN, 13));
-		lblOtemSer_1.setBounds(10, 98, 392, 26);
+		lblOtemSer_1.setBounds(0, 66, 392, 26);
 		excluirOuNaoPanel.add(lblOtemSer_1);
 
 		JButton simButton_1 = new JButton("Sim");
+		simButton_1.setBorder(new LineBorder(new Color(0, 128, 0), 1, true));
 		simButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -1052,16 +1080,16 @@ public class TelaVendas extends JFrame {
 
 		});
 
-
 		simButton_1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		simButton_1.setActionCommand("OK");
-		simButton_1.setBounds(88, 146, 80, 35);
+		simButton_1.setBounds(44, 103, 80, 35);
 		excluirOuNaoPanel.add(simButton_1);
 
 		JButton cancelButton_1 = new JButton("Não");
+		cancelButton_1.setBorder(new LineBorder(new Color(255, 0, 0), 1, true));
 		cancelButton_1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		cancelButton_1.setActionCommand("Cancel");
-		cancelButton_1.setBounds(268, 146, 80, 35);
+		cancelButton_1.setBounds(235, 103, 80, 35);
 		excluirOuNaoPanel.add(cancelButton_1);
 
 		JPanel panel_5 = new JPanel();
@@ -1122,12 +1150,12 @@ public class TelaVendas extends JFrame {
 		panel_6.add(txtNomeCliente);
 
 		JButton btnNewButton_1_2 = new JButton("Pesquisar");
-		btnNewButton_1_2.setBounds(304, 67, 89, 23);
+		btnNewButton_1_2.setBounds(347, 67, 89, 23);
 		panel_6.add(btnNewButton_1_2);
 
 		JButton btnLimparConsVenda = new JButton("Limpar");
 		btnLimparConsVenda.setFont(new Font("Verdana", Font.PLAIN, 12));
-		btnLimparConsVenda.setBounds(68, 645, 89, 32);
+		btnLimparConsVenda.setBounds(1060, 623, 89, 32);
 		panel_6.add(btnLimparConsVenda);
 
 		txtTotalDaVenda = new JTextField();
@@ -1540,17 +1568,16 @@ public class TelaVendas extends JFrame {
 		panel_1_1.add(boxParcelas);
 		boxParcelas.setModel(new DefaultComboBoxModel(new String[] { "Parcelas", "2x", "3x", "4x", "5x" }));
 		boxParcelas.setVisible(false);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("F9");
 		lblNewLabel_3.setFont(new Font("Dialog", Font.PLAIN, 13));
 		lblNewLabel_3.setBounds(15, 212, 31, 14);
 		panel_9.add(lblNewLabel_3);
-		
-		
+
 		// VAI PARA ABA DE PAGAMENTO
 		JButton btnPagamentoVenda = new JButton("");
 		btnPagamentoVenda.setIcon(new ImageIcon(TelaVendas.class.getResource("1.png")));
-		
+
 		btnPagamentoVenda.setBorder(null);
 		btnPagamentoVenda.setBackground(new Color(38, 147, 166));
 		btnPagamentoVenda.setForeground(new Color(255, 207, 134));
@@ -1558,84 +1585,82 @@ public class TelaVendas extends JFrame {
 		panel_9.add(btnPagamentoVenda);
 		btnPagamentoVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPagamentoVenda.setFont(new Font("Dubai", Font.BOLD, 15));
-		
+
 		JLabel lblNewLabel_3_2 = new JLabel("F10");
 		lblNewLabel_3_2.setFont(new Font("Dialog", Font.PLAIN, 13));
 		lblNewLabel_3_2.setBounds(15, 289, 31, 14);
 		panel_9.add(lblNewLabel_3_2);
-		
-				// LIMPA PRODUTOS ADICIONADOS NA VENDA
-				JButton btnNewButton_4 = new JButton("");
-				btnNewButton_4.setIcon(new ImageIcon(TelaVendas.class.getResource("8 (2).png")));
-				btnNewButton_4.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						lblProdutosVenda.setText("");
-						lblQuantVendas.setText("");
-						lblPrecoUnVendas.setText("");
-						lblPrecoTotVenda.setText("");
-						txtTotalVenda.setText("");
-					}
-				});
-				
-				btnNewButton_4.setBorder(null);
-				btnNewButton_4.setBackground(new Color(38, 147, 166));
-				btnNewButton_4.setForeground(new Color(255, 207, 134));
-				btnNewButton_4.setBounds(10, 280, 135, 60);
-				panel_9.add(btnNewButton_4);
-				btnNewButton_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				btnNewButton_4.setFont(new Font("Dubai", Font.BOLD, 15));
-				
-				JLabel lblNewLabel_3_4 = new JLabel("F11");
-				lblNewLabel_3_4.setFont(new Font("Dialog", Font.PLAIN, 13));
-				lblNewLabel_3_4.setBounds(15, 366, 31, 14);
-				panel_9.add(lblNewLabel_3_4);
-				
-						// CANCELA TUDO
-						JButton btnNewButton_3 = new JButton("");
-						btnNewButton_3.setIcon(new ImageIcon(TelaVendas.class.getResource("6.png")));
-						btnNewButton_3.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								txtVendedorVenda.setText("");
-								txtCpfClienteVenda.setText("");
-								lblProdutosVenda.setText("");
-								lblQuantVendas.setText("");
-								lblPrecoUnVendas.setText("");
-								lblPrecoTotVenda.setText("");
-								txtTotalVenda.setText("");
-								lblNomeClienteVenda.setText("");
-							}
-						});
-						btnNewButton_3.setBorder(null);
-						btnNewButton_3.setBackground(new Color(38, 147, 166));
-						btnNewButton_3.setForeground(new Color(255, 207, 134));
-						btnNewButton_3.setBounds(10, 355, 135, 60);
-						panel_9.add(btnNewButton_3);
-						btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-						btnNewButton_3.setFont(new Font("Dubai", Font.BOLD, 15));
-						
-						JLabel lblNewLabel_3_5 = new JLabel("F12");
-						lblNewLabel_3_5.setBounds(15, 440, 31, 14);
-						panel_9.add(lblNewLabel_3_5);
-						lblNewLabel_3_5.setFont(new Font("Dialog", Font.PLAIN, 13));
-						
-								// CONSULTA PREÇO
-								JButton btnConsultarPreco = new JButton("");
-								btnConsultarPreco.setIcon(new ImageIcon(TelaVendas.class.getResource("5.png")));
-								btnConsultarPreco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-								btnConsultarPreco.setBorder(null);
-								btnConsultarPreco.setBackground(new Color(38, 147, 166));
-								btnConsultarPreco.setForeground(new Color(255, 207, 134));
-								btnConsultarPreco.setBounds(10, 430, 135, 60);
-								panel_9.add(btnConsultarPreco);
-								btnConsultarPreco.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
 
-										new ConsultaPreco().setVisible(true);
-									}
-								});
-								btnConsultarPreco.setFont(new Font("Dubai", Font.BOLD, 15));
-		
-		
+		// LIMPA PRODUTOS ADICIONADOS NA VENDA
+		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.setIcon(new ImageIcon(TelaVendas.class.getResource("8 (2).png")));
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblProdutosVenda.setText("");
+				lblQuantVendas.setText("");
+				lblPrecoUnVendas.setText("");
+				lblPrecoTotVenda.setText("");
+				txtTotalVenda.setText("");
+			}
+		});
+
+		btnNewButton_4.setBorder(null);
+		btnNewButton_4.setBackground(new Color(38, 147, 166));
+		btnNewButton_4.setForeground(new Color(255, 207, 134));
+		btnNewButton_4.setBounds(10, 280, 135, 60);
+		panel_9.add(btnNewButton_4);
+		btnNewButton_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNewButton_4.setFont(new Font("Dubai", Font.BOLD, 15));
+
+		JLabel lblNewLabel_3_4 = new JLabel("F11");
+		lblNewLabel_3_4.setFont(new Font("Dialog", Font.PLAIN, 13));
+		lblNewLabel_3_4.setBounds(15, 366, 31, 14);
+		panel_9.add(lblNewLabel_3_4);
+
+		// CANCELA TUDO
+		JButton btnNewButton_3 = new JButton("");
+		btnNewButton_3.setIcon(new ImageIcon(TelaVendas.class.getResource("6.png")));
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtVendedorVenda.setText("");
+				txtCpfClienteVenda.setText("");
+				lblProdutosVenda.setText("");
+				lblQuantVendas.setText("");
+				lblPrecoUnVendas.setText("");
+				lblPrecoTotVenda.setText("");
+				txtTotalVenda.setText("");
+				lblNomeClienteVenda.setText("");
+			}
+		});
+		btnNewButton_3.setBorder(null);
+		btnNewButton_3.setBackground(new Color(38, 147, 166));
+		btnNewButton_3.setForeground(new Color(255, 207, 134));
+		btnNewButton_3.setBounds(10, 355, 135, 60);
+		panel_9.add(btnNewButton_3);
+		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNewButton_3.setFont(new Font("Dubai", Font.BOLD, 15));
+
+		JLabel lblNewLabel_3_5 = new JLabel("F12");
+		lblNewLabel_3_5.setBounds(15, 440, 31, 14);
+		panel_9.add(lblNewLabel_3_5);
+		lblNewLabel_3_5.setFont(new Font("Dialog", Font.PLAIN, 13));
+
+		// CONSULTA PREÇO
+		JButton btnConsultarPreco = new JButton("");
+		btnConsultarPreco.setIcon(new ImageIcon(TelaVendas.class.getResource("5.png")));
+		btnConsultarPreco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnConsultarPreco.setBorder(null);
+		btnConsultarPreco.setBackground(new Color(38, 147, 166));
+		btnConsultarPreco.setForeground(new Color(255, 207, 134));
+		btnConsultarPreco.setBounds(10, 430, 135, 60);
+		panel_9.add(btnConsultarPreco);
+		btnConsultarPreco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				new ConsultaPreco().setVisible(true);
+			}
+		});
+		btnConsultarPreco.setFont(new Font("Dubai", Font.BOLD, 15));		
 
 		JLabel lblAgradecimento = new JLabel("");
 		lblAgradecimento.setBounds(298, 592, 326, 27);
@@ -1684,7 +1709,7 @@ public class TelaVendas extends JFrame {
 		JLabel lblNewLabel_16 = new JLabel("PAGAMENTO");
 		lblNewLabel_16.setBounds(62, 22, 142, 13);
 		panel_1_1.add(lblNewLabel_16);
-		
+
 		JTextArea txtParcelasValor = new JTextArea();
 		txtParcelasValor.setFont(new Font("Monospaced", Font.BOLD, 20));
 		txtParcelasValor.setEditable(false);
@@ -1694,35 +1719,35 @@ public class TelaVendas extends JFrame {
 		txtCpfClienteVenda.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+
 				if (e.getKeyCode() == 10) {
-				String cpf = txtCpfClienteVenda.getText();
+					String cpf = txtCpfClienteVenda.getText();
 
-				String QUERY = "SELECT cpf, nome FROM clientes WHERE cpf='";
-				QUERY = QUERY + cpf + "';";
+					String QUERY = "SELECT cpf, nome FROM clientes WHERE cpf='";
+					QUERY = QUERY + cpf + "';";
 
-				try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-						Statement stmt = conn.createStatement();
+					try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+							Statement stmt = conn.createStatement();
 
-						ResultSet rs = stmt.executeQuery(QUERY);) {
+							ResultSet rs = stmt.executeQuery(QUERY);) {
 
-					while (rs.next()) {
+						while (rs.next()) {
 
-						if (rs.getString("cpf").equals(cpf)) {
+							if (rs.getString("cpf").equals(cpf)) {
 
-							String nome = rs.getString("nome");
+								String nome = rs.getString("nome");
 
-							lblNomeClienteVenda.setText(nome);
+								lblNomeClienteVenda.setText(nome);
 
-							txtRefVenda.grabFocus();
+								txtRefVenda.grabFocus();
+							}
+
+							break;
 						}
 
-						break;
+					} catch (SQLException el) {
+						el.printStackTrace();
 					}
-
-				} catch (SQLException el) {
-					el.printStackTrace();
-				}
 				}
 			}
 		});
@@ -1734,7 +1759,7 @@ public class TelaVendas extends JFrame {
 					String vendedor = txtVendedorVenda.getText();
 
 					String QUERY = "SELECT id, nome FROM funcionarios WHERE id='";
-					QUERY = QUERY + String.valueOf(vendedor) +"';";
+					QUERY = QUERY + String.valueOf(vendedor) + "';";
 
 					try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 							Statement stmt = conn.createStatement();
@@ -1763,7 +1788,7 @@ public class TelaVendas extends JFrame {
 				}
 			}
 		});
-		
+
 		txtRefVenda.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1772,7 +1797,7 @@ public class TelaVendas extends JFrame {
 					txtQuantVenda.selectAll();
 
 				}
-				
+
 				if (e.getKeyCode() == 120) {
 					if (!txtTotalVenda.getText().isEmpty()) {
 
@@ -1788,21 +1813,21 @@ public class TelaVendas extends JFrame {
 						double p4 = vDouble / 4;
 						double p5 = vDouble / 5;
 
-						txtParcelasValor.setText("Valor à vista: " + v + "\n" + "2x: " + String.format("%.2f", p2) + "\n"
-								+ "3x: " + String.format("%.2f", p3) + "\n" + "4x: " + String.format("%.2f", p4) + "\n"
-								+ "5x: " + String.format("%.2f", p5));
+						txtParcelasValor.setText("Valor à vista: " + v + "\n" + "2x: " + String.format("%.2f", p2)
+								+ "\n" + "3x: " + String.format("%.2f", p3) + "\n" + "4x: " + String.format("%.2f", p4)
+								+ "\n" + "5x: " + String.format("%.2f", p5));
 					}
 				}
-				
-				if(e.getKeyCode() == 121) {
+
+				if (e.getKeyCode() == 121) {
 					lblProdutosVenda.setText("");
 					lblQuantVendas.setText("");
 					lblPrecoUnVendas.setText("");
 					lblPrecoTotVenda.setText("");
 					txtTotalVenda.setText("");
 				}
-				
-				if(e.getKeyCode() == 122) {
+
+				if (e.getKeyCode() == 122) {
 					txtVendedorVenda.setText("");
 					txtCpfClienteVenda.setText("");
 					lblProdutosVenda.setText("");
@@ -1812,130 +1837,129 @@ public class TelaVendas extends JFrame {
 					txtTotalVenda.setText("");
 					lblNomeClienteVenda.setText("");
 				}
-				
-				if(e.getKeyCode() == 123) {
+
+				if (e.getKeyCode() == 123) {
 					new ConsultaPreco().setVisible(true);
 				}
 			}
 		});
+		
 
 		txtQuantVenda.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+				if (e.getKeyCode() == 10) {
 
-				if (!lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty()) {
-					
-					
-					String refProduto = txtRefVenda.getText();
-					String quantidade = txtQuantVenda.getText();
+					if (!lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty()) {
 
-					String QUERY = "SELECT * FROM produtos WHERE referencia=";
-					QUERY = QUERY + refProduto;
-					
-					
-					
-					try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-							Statement stmt = conn.createStatement();
+						String refProduto = txtRefVenda.getText();
+						String quantidade = txtQuantVenda.getText();
 
-							ResultSet rs = stmt.executeQuery(QUERY);) {
+						String QUERY = "SELECT * FROM produtos WHERE referencia=";
+						QUERY = QUERY + refProduto;
 
-						if( rs.next()) {
-							
-							do {								
-									
-								System.out.println("aqui");
-								if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
-									txtRefVenda.setText("");
+						try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+								Statement stmt = conn.createStatement();
 
-									// printa o produto
-									String produtoAnterior = lblProdutosVenda.getText();
-									String nome = rs.getString("nome");
-									double preco = rs.getDouble("preco");
-									String prodAtual = nome;
-									String prodAtual_2 = produtoAnterior + "\n " + nome;
+								ResultSet rs = stmt.executeQuery(QUERY);) {
 
-									lblProdutosVenda.setText(prodAtual_2);
+							if (rs.next()) {
 
-									// printa quantidade
+								do {
 
-									String quantAnterior = lblQuantVendas.getText();
+									if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
+										txtRefVenda.setText("");
 
-									String quantAtual = txtQuantVenda.getText();
+										// printa o produto
+										String produtoAnterior = lblProdutosVenda.getText();
+										String nome = rs.getString("nome");
+										double preco = rs.getDouble("preco");
+										String prodAtual = nome;
+										String prodAtual_2 = produtoAnterior + "\n " + nome;
 
-									String quantAtual_2 = quantAnterior + "\n " + quantAtual;
+										lblProdutosVenda.setText(prodAtual_2);
 
-									lblQuantVendas.setText(quantAtual_2);
+										// printa quantidade
 
-									// printa preco
+										String quantAnterior = lblQuantVendas.getText();
 
-									String precoAnterior = lblPrecoUnVendas.getText();
+										String quantAtual = txtQuantVenda.getText();
 
-									String precoAtual = String.valueOf(preco);
+										String quantAtual_2 = quantAnterior + "\n " + quantAtual;
 
-									String precoAtual_2 = precoAnterior + "\n" + precoAtual;
+										lblQuantVendas.setText(quantAtual_2);
 
-									lblPrecoUnVendas.setText(precoAtual_2 + "0");
+										// printa preco
 
-									// preco total
+										String precoAnterior = lblPrecoUnVendas.getText();
 
-									String totalAnterior = lblPrecoTotVenda.getText();
+										String precoAtual = String.valueOf(preco);
 
-									double totalAtual = Double.parseDouble(precoAtual) * Integer.parseInt(quantAtual);
+										String precoAtual_2 = precoAnterior + "\n" + precoAtual;
 
-									lblPrecoTotVenda.setText(totalAnterior + "\n" + String.format("%.2f", totalAtual));
+										lblPrecoUnVendas.setText(precoAtual_2 + "0");
 
-									// venda total
+										// preco total
 
-									if (totalAnterior.isEmpty()) {
-										venda = venda + totalAtual;
-										txtTotalVenda.setText(String.format("%.2f", venda));								
+										String totalAnterior = lblPrecoTotVenda.getText();
 
-									} else {
+										double totalAtual = Double.parseDouble(precoAtual)
+												* Integer.parseInt(quantAtual);
 
-										venda = venda + totalAtual;
-										txtTotalVenda.setText(String.format("%.2f", venda));
+										lblPrecoTotVenda
+												.setText(totalAnterior + "\n" + String.format("%.2f", totalAtual));
 
+										// venda total
+
+										if (totalAnterior.isEmpty()) {
+											venda = venda + totalAtual;
+											txtTotalVenda.setText(String.format("%.2f", venda));
+
+										} else {
+
+											venda = venda + totalAtual;
+											txtTotalVenda.setText(String.format("%.2f", venda));
+
+										}
+										txtRefVenda.grabFocus();
+
+										break;
 									}
-									txtRefVenda.grabFocus();
+								} while (rs.next());
 
-									break;
-								}
-							}while (rs.next());
-							
-						}
-						else {
-							JOptionPane.showMessageDialog(null, "Produto não cadastrado.");
-							txtRefVenda.setText("");
-							txtRefVenda.grabFocus();
+							} else {
+								JOptionPane.showMessageDialog(null, "Produto não cadastrado.");
+								txtRefVenda.setText("");
+								txtRefVenda.grabFocus();
 
 							}
 
-					} catch (SQLException el) {
-						el.printStackTrace();
-					}
-						
+						} catch (SQLException el) {
+							el.printStackTrace();
+						}
+
 						txtQuantVenda.setText("1");
-					}				
+					}
+				}
 			}
 		});
-		
+
 		boxMetodoPag.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String metodoPag = boxMetodoPag.getSelectedItem().toString();
-				
-				if(metodoPag.equals("Crédito")) {
+
+				if (metodoPag.equals("Crédito")) {
 					boxParcelas.setVisible(true);
 					boxBandeira.setVisible(true);
 				}
-				
+
 				if (metodoPag.equals("Débito")) {
 					boxBandeira.setVisible(true);
 					boxParcelas.setVisible(false);
 				}
 			}
 		});
-		
+
 		btnPagamentoVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!txtTotalVenda.getText().isEmpty()) {
@@ -1951,14 +1975,14 @@ public class TelaVendas extends JFrame {
 					double p3 = vDouble / 3;
 					double p4 = vDouble / 4;
 					double p5 = vDouble / 5;
-					
+
 					txtParcelasValor.setText("Valor à vista: " + v + "\n" + "2x: " + String.format("%.2f", p2) + "\n"
 							+ "3x: " + String.format("%.2f", p3) + "\n" + "4x: " + String.format("%.2f", p4) + "\n"
 							+ "5x: " + String.format("%.2f", p5));
 				}
 			}
 		});
-		
+
 		btnFinalizarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnVoltaParaVenda.setVisible(true);
@@ -1966,7 +1990,6 @@ public class TelaVendas extends JFrame {
 				String parcelas = boxParcelas.getSelectedItem().toString();
 				double v;
 
-				
 				if (metodoPag.equals("Crédito")) {
 
 					if (parcelas.equals("2x")) {
