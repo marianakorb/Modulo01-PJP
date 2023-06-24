@@ -198,6 +198,7 @@ public class TelaVendas extends JFrame {
 		lblNewLabel.setFont(new Font("Dubai", Font.BOLD, 15));
 
 		txtVendedorVenda = new JTextField();
+		txtVendedorVenda.setText("2302");
 		txtVendedorVenda.setFont(new Font("Dubai", Font.PLAIN, 15));
 		txtVendedorVenda.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		txtVendedorVenda.setBounds(221, 85, 194, 20);
@@ -224,6 +225,7 @@ public class TelaVendas extends JFrame {
 		txtQuantVenda.setText("1");
 
 		txtCpfClienteVenda = new JTextField();
+		txtCpfClienteVenda.setText("11122233344");
 		txtCpfClienteVenda.setFont(new Font("Dubai", Font.PLAIN, 15));
 		txtCpfClienteVenda.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		txtCpfClienteVenda.setBounds(221, 116, 194, 20);
@@ -280,6 +282,7 @@ public class TelaVendas extends JFrame {
 		panel.add(txtTotalVenda);
 
 		JTextField txtRefVenda = new JTextField();
+		txtRefVenda.setText("20230001");
 		txtRefVenda.setFont(new Font("Dubai", Font.PLAIN, 15));
 		txtRefVenda.setBorder(new LineBorder(new Color(38, 147, 166), 1, true));
 		txtRefVenda.setBounds(146, 228, 269, 20);
@@ -523,7 +526,7 @@ public class TelaVendas extends JFrame {
 		btnAdicionarProdutoVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if ( !lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty() ) {
+				if (!lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty()) {
 
 					String refProduto = txtRefVenda.getText();
 					String quantidade = txtQuantVenda.getText();
@@ -615,35 +618,34 @@ public class TelaVendas extends JFrame {
 		panel.add(btnAdicionarProdutoVenda);
 
 		LocalDate date = LocalDate.now();
-	    DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
-	    String textDate = date.format(formatters);
-	    LocalDate parsedDate = LocalDate.parse(textDate, formatters);
-		
-		
+		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+		String textDate = date.format(formatters);
+		LocalDate parsedDate = LocalDate.parse(textDate, formatters);
+
 		Calendar data = Calendar.getInstance();
-		int hora = data.get(Calendar.HOUR_OF_DAY); 
+		int hora = data.get(Calendar.HOUR_OF_DAY);
 		int min = data.get(Calendar.MINUTE);
 		int seg = data.get(Calendar.SECOND);
-		
+
 		JPanel panel_7 = new JPanel();
 		panel_7.setBounds(0, 0, 1181, 57);
 		panel_7.setBackground(new Color(38, 147, 166));
 		panel.add(panel_7);
 		panel_7.setLayout(null);
-		
-				JLabel lblData = new JLabel("Data: " + textDate);
-				lblData.setForeground(new Color(255, 255, 255));
-				lblData.setBounds(1059, 11, 112, 14);
-				panel_7.add(lblData);
-				lblData.setHorizontalAlignment(SwingConstants.RIGHT);
-				lblData.setFont(new Font("Dialog", Font.PLAIN, 12));
-				
-						JLabel lblHora = new JLabel(hora +":"+min+":"+seg+ " ");
-						lblHora.setForeground(new Color(255, 255, 255));
-						lblHora.setBounds(1059, 36, 112, 14);
-						panel_7.add(lblHora);
-						lblHora.setHorizontalAlignment(SwingConstants.RIGHT);
-						lblHora.setFont(new Font("Dialog", Font.PLAIN, 12));
+
+		JLabel lblData = new JLabel("Data: " + textDate);
+		lblData.setForeground(new Color(255, 255, 255));
+		lblData.setBounds(1059, 11, 112, 14);
+		panel_7.add(lblData);
+		lblData.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblData.setFont(new Font("Dialog", Font.PLAIN, 12));
+
+		JLabel lblHora = new JLabel(hora + ":" + min + ":" + seg + " ");
+		lblHora.setForeground(new Color(255, 255, 255));
+		lblHora.setBounds(1059, 36, 112, 14);
+		panel_7.add(lblHora);
+		lblHora.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblHora.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(new Color(255, 207, 134));
@@ -1411,6 +1413,11 @@ public class TelaVendas extends JFrame {
 		btnCadastrarEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				txtRefEstoque.setText("");
+				txtProdutoEstoque.setText("");
+				txtPrecoEstoque.setText("");
+				txtQuantEstoque.setText("");
+
 				lblFuncaoEstoque.setText("CADASTRAR NOVO PRODUTO");
 				panel_estoque.setVisible(true);
 				btnSalvarEstoque.setText("Cadastrar");
@@ -1660,7 +1667,7 @@ public class TelaVendas extends JFrame {
 				new ConsultaPreco().setVisible(true);
 			}
 		});
-		btnConsultarPreco.setFont(new Font("Dubai", Font.BOLD, 15));		
+		btnConsultarPreco.setFont(new Font("Dubai", Font.BOLD, 15));
 
 		JLabel lblAgradecimento = new JLabel("");
 		lblAgradecimento.setBounds(298, 592, 326, 27);
@@ -1680,7 +1687,7 @@ public class TelaVendas extends JFrame {
 				txtVendedorVenda.setText("");
 				txtCpfClienteVenda.setText("");
 				lblNomeClienteVenda.setText("");
-
+				venda = 0;
 				txtVendedorVenda.grabFocus();
 			}
 		});
@@ -1843,7 +1850,6 @@ public class TelaVendas extends JFrame {
 				}
 			}
 		});
-		
 
 		txtQuantVenda.addKeyListener(new KeyAdapter() {
 			@Override
@@ -1853,7 +1859,7 @@ public class TelaVendas extends JFrame {
 					if (!lblNomeClienteVenda.getText().isEmpty() && !txtVendedorVenda.getText().isEmpty()) {
 
 						String refProduto = txtRefVenda.getText();
-						String quantidade = txtQuantVenda.getText();
+						int quantidade = Integer.parseInt(txtQuantVenda.getText());
 
 						String QUERY = "SELECT * FROM produtos WHERE referencia=";
 						QUERY = QUERY + refProduto;
@@ -1868,63 +1874,76 @@ public class TelaVendas extends JFrame {
 								do {
 
 									if (Integer.parseInt(refProduto) == rs.getInt("referencia")) {
+
 										txtRefVenda.setText("");
 
-										// printa o produto
-										String produtoAnterior = lblProdutosVenda.getText();
-										String nome = rs.getString("nome");
-										double preco = rs.getDouble("preco");
-										String prodAtual = nome;
-										String prodAtual_2 = produtoAnterior + "\n " + nome;
+//										int quantEstoque = rs.getInt("quantidade");
+//
+//										if (quantEstoque >= quantidade) {
+//
+//											int estoqueAtualizado = quantEstoque - quantidade;
+//
+//											String sql = "UPDATE sistemainternoloja.produtos SET quantidade ='"
+//													+ estoqueAtualizado + "' WHERE (referencia ='" + refProduto + "') ";
+//											stmt.executeUpdate(sql);
 
-										lblProdutosVenda.setText(prodAtual_2);
+											// printa o produto
+											String produtoAnterior = lblProdutosVenda.getText();
+											String nome = rs.getString("nome");
+											double preco = rs.getDouble("preco");
+											String prodAtual = nome;
+											String prodAtual_2 = produtoAnterior + "\n " + nome;
 
-										// printa quantidade
+											lblProdutosVenda.setText(prodAtual_2);
 
-										String quantAnterior = lblQuantVendas.getText();
+											// printa quantidade
 
-										String quantAtual = txtQuantVenda.getText();
+											String quantAnterior = lblQuantVendas.getText();
 
-										String quantAtual_2 = quantAnterior + "\n " + quantAtual;
+											String quantAtual = txtQuantVenda.getText();
 
-										lblQuantVendas.setText(quantAtual_2);
+											String quantAtual_2 = quantAnterior + "\n " + quantAtual;
 
-										// printa preco
+											lblQuantVendas.setText(quantAtual_2);
 
-										String precoAnterior = lblPrecoUnVendas.getText();
+											// printa preco
 
-										String precoAtual = String.valueOf(preco);
+											String precoAnterior = lblPrecoUnVendas.getText();
 
-										String precoAtual_2 = precoAnterior + "\n" + precoAtual;
+											String precoAtual = String.valueOf(preco);
 
-										lblPrecoUnVendas.setText(precoAtual_2 + "0");
+											String precoAtual_2 = precoAnterior + "\n" + precoAtual;
 
-										// preco total
+											lblPrecoUnVendas.setText(precoAtual_2 + "0");
 
-										String totalAnterior = lblPrecoTotVenda.getText();
+											// preco total
 
-										double totalAtual = Double.parseDouble(precoAtual)
-												* Integer.parseInt(quantAtual);
+											String totalAnterior = lblPrecoTotVenda.getText();
 
-										lblPrecoTotVenda
-												.setText(totalAnterior + "\n" + String.format("%.2f", totalAtual));
+											double totalAtual = Double.parseDouble(precoAtual)
+													* Integer.parseInt(quantAtual);
 
-										// venda total
+											lblPrecoTotVenda
+													.setText(totalAnterior + "\n" + String.format("%.2f", totalAtual));
 
-										if (totalAnterior.isEmpty()) {
-											venda = venda + totalAtual;
-											txtTotalVenda.setText(String.format("%.2f", venda));
+											// venda total
 
-										} else {
+											if (totalAnterior.isEmpty()) {
+												venda = venda + totalAtual;
+												txtTotalVenda.setText(String.format("%.2f", venda));
 
-											venda = venda + totalAtual;
-											txtTotalVenda.setText(String.format("%.2f", venda));
+											} else {
 
-										}
-										txtRefVenda.grabFocus();
+												venda = venda + totalAtual;
+												txtTotalVenda.setText(String.format("%.2f", venda));
 
-										break;
-									}
+											}
+											txtRefVenda.grabFocus();
+
+											break;
+
+										}									
+									
 								} while (rs.next());
 
 							} else {
@@ -1985,12 +2004,20 @@ public class TelaVendas extends JFrame {
 
 		btnFinalizarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnVoltaParaVenda.setVisible(true);
+				
+				
 				String metodoPag = boxMetodoPag.getSelectedItem().toString();
 				String parcelas = boxParcelas.getSelectedItem().toString();
 				double v;
-
-				if (metodoPag.equals("Crédito")) {
+				
+				if (metodoPag.equals("Método Pagamento")) {
+					
+					btnFinalizarVenda.removeActionListener(null);
+					lblAgradecimento.setText("Adicione um método de pagamento.");
+					btnVoltaParaVenda.setVisible(false);
+					btnPagamentoVenda.getAction();
+					
+				} else if (metodoPag.equals("Crédito")) {
 
 					if (parcelas.equals("2x")) {
 						v = venda / 2;
@@ -2016,20 +2043,23 @@ public class TelaVendas extends JFrame {
 
 						txtParcelasValor.setText("Parcelado em 5 vezes de: " + String.format("%.2f", v));
 					}
+					
+					lblAgradecimento.setText("Venda finalizada!");
+					btnVoltaParaVenda.setVisible(true);
 
-				}
-
-				if (metodoPag.equals("Dinheiro")) {
+				} else if (metodoPag.equals("Dinheiro")) {
 
 					txtParcelasValor.setText("Pagamento em Dinheiro.");
-				}
-
-				if (metodoPag.equals("Débito")) {
+					lblAgradecimento.setText("Venda finalizada!");
+					btnVoltaParaVenda.setVisible(true);
+					
+				} else {
 
 					txtParcelasValor.setText("Pagamento em Débito.");
-				}
-
-				lblAgradecimento.setText("Venda finalizada!");
+					lblAgradecimento.setText("Venda finalizada!");
+					btnVoltaParaVenda.setVisible(true);
+				}															
+				
 			}
 
 		});
