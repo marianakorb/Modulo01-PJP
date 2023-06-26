@@ -123,8 +123,9 @@ public class ConsultaPreco extends JFrame {
 						
 				         ResultSet rs = stmt.executeQuery(QUERY);
 				      ) {		      
-					
-						while(rs.next()){	
+					if( rs.next() ) {
+											
+						do {	
 							
 							String nome = rs.getString("nome");
 							String preco = rs.getString("preco");							
@@ -135,12 +136,13 @@ public class ConsultaPreco extends JFrame {
 				            	 lblPreco.setText(preco);
 				            	 
 				            	 break;
-				             } else {
-				            	 
-				            	 JOptionPane.showMessageDialog(null, "PRODUTO NÃO ENCONTRADO");			             
-				             }				            	 
+				             } 				            	 
 				             
-				       } 
+				       } while(rs.next());
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "PRODUTO NÃO ENCONTRADO");		
+					}
 				         
 				      } catch (SQLException el) {
 				         el.printStackTrace();
