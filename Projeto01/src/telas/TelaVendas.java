@@ -50,6 +50,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
 import javax.swing.DropMode;
 import java.awt.ComponentOrientation;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaVendas extends JFrame {
 
@@ -310,6 +312,7 @@ public class TelaVendas extends JFrame {
 		panel.add(lblNomeClienteVenda);
 
 		JButton pesquisarCpf = new JButton("pesquisar");
+		pesquisarCpf.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		pesquisarCpf.setFont(new Font("Dialog", Font.PLAIN, 15));
 		pesquisarCpf.setBounds(445, 115, 102, 23);
 		pesquisarCpf.addActionListener(new ActionListener() {
@@ -497,6 +500,7 @@ public class TelaVendas extends JFrame {
 		panel_2.add(lblNewLabel_6_2_4);
 
 		JButton btnAdicionarProdutoVenda = new JButton("pesquisar");
+		btnAdicionarProdutoVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionarProdutoVenda.setFont(new Font("Dialog", Font.PLAIN, 15));
 		btnAdicionarProdutoVenda.setBounds(509, 249, 112, 23);
 		JTextArea lblQuantVendas = new JTextArea();
@@ -652,6 +656,12 @@ public class TelaVendas extends JFrame {
 		panel_9.setBounds(1021, 56, 160, 615);
 		panel.add(panel_9);
 		panel_9.setLayout(null);
+		
+				JLabel lblNewLabel_3_2 = new JLabel("F10");
+				lblNewLabel_3_2.setForeground(new Color(255, 207, 134));
+				lblNewLabel_3_2.setFont(new Font("Dialog", Font.PLAIN, 13));
+				lblNewLabel_3_2.setBounds(15, 247, 31, 14);
+				panel_9.add(lblNewLabel_3_2);
 
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setIcon(new ImageIcon(TelaVendas.class.getResource("7.png")));
@@ -683,6 +693,7 @@ public class TelaVendas extends JFrame {
 		panelExcluirCliente.setVisible(false);
 
 		JButton btnNewButton_2 = new JButton("SIM");
+		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -711,6 +722,7 @@ public class TelaVendas extends JFrame {
 		panelExcluirCliente.add(btnNewButton_2);
 
 		JButton btnNewButton_5 = new JButton("NÃO");
+		btnNewButton_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_5.setFont(new Font("Dialog", Font.PLAIN, 13));
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -957,6 +969,7 @@ public class TelaVendas extends JFrame {
 		panel_9_1.setBounds(1021, 56, 160, 615);
 		panel_3.add(panel_9_1);
 		JButton excluirBtn = new JButton("");
+		excluirBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		excluirBtn.setIcon(new ImageIcon(TelaVendas.class.getResource("EXCLUIR.png")));
 		excluirBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -970,6 +983,7 @@ public class TelaVendas extends JFrame {
 		excluirBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		JButton limparBtn = new JButton("");
+		limparBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		limparBtn.setIcon(new ImageIcon(TelaVendas.class.getResource("8 (2).png")));
 		limparBtn.setBounds(15, 430, 135, 60);
 		panel_9_1.add(limparBtn);
@@ -983,19 +997,22 @@ public class TelaVendas extends JFrame {
 		limparBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		JButton salvarClienteBtn = new JButton("");
+		salvarClienteBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		salvarClienteBtn.setIcon(new ImageIcon(TelaVendas.class.getResource("SALVAR.png")));
 		salvarClienteBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
 		salvarClienteBtn.setBounds(15, 360, 135, 60);
 		panel_9_1.add(salvarClienteBtn);
 
-		JButton atualizarButton = new JButton(" Atualizar Cadastro");
-		atualizarButton.setBounds(15, 290, 135, 60);
+		JButton atualizarButton = new JButton("");
+		atualizarButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		atualizarButton.setBounds(15, 291, 135, 60);
 		panel_9_1.add(atualizarButton);
-		atualizarButton.setVisible(false);
+		//atualizarButton.setEnabled(false);
+		atualizarButton.setIcon(new ImageIcon(TelaVendas.class.getResource("13.png")));
 		atualizarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				salvarClienteBtn.setVisible(true);
+				//salvarClienteBtn.setEnabled(true);
 				salvarClienteBtn.setText("Salvar Atualização");
 				
 				tornarCampoEditavel(true);
@@ -1005,7 +1022,8 @@ public class TelaVendas extends JFrame {
 		atualizarButton.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		JButton pesquisarClientesBtn = new JButton("pesquisar");
-		pesquisarClientesBtn.setBounds(335, 145, 95, 23);
+		pesquisarClientesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		pesquisarClientesBtn.setBounds(335, 145, 103, 23);
 		panel_3.add(pesquisarClientesBtn);
 		pesquisarClientesBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1020,9 +1038,9 @@ public class TelaVendas extends JFrame {
 							ResultSet rs = stmt.executeQuery(QUERY)) {
 						if (rs.next()) {
 
-							limparBtn.setVisible(true);
-							excluirBtn.setVisible(true);
-							salvarClienteBtn.setVisible(false);
+							//limparBtn.setVisible(true);
+							//excluirBtn.setVisible(true);
+							//salvarClienteBtn.setVisible(false);
 							cpfTextField.setText(cpf);
 
 							String nome = rs.getString("nome");
@@ -1061,7 +1079,7 @@ public class TelaVendas extends JFrame {
 							String e_mail = rs.getString("email");
 							emailTextField.setText(e_mail);
 
-							atualizarButton.setVisible(true);
+							//atualizarButton.setVisible(true);
 
 							tornarCampoEditavel(false);
 
@@ -1079,6 +1097,7 @@ public class TelaVendas extends JFrame {
 		pesquisarClientesBtn.setFont(new Font("Dialog", Font.PLAIN, 14));
 
 		JButton novoCadastroBtn = new JButton("");
+		novoCadastroBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		novoCadastroBtn.setIcon(new ImageIcon(TelaVendas.class.getResource("ADD.png")));
 		novoCadastroBtn.setFont(new Font("Dialog", Font.PLAIN, 12));
 		novoCadastroBtn.setBounds(15, 220, 135, 60);
@@ -1093,7 +1112,7 @@ public class TelaVendas extends JFrame {
 				
 				
 				limparTextfield("");
-				salvarClienteBtn.setVisible(true);
+				//salvarClienteBtn.setVisible(true);
 				salvarClienteBtn.setText("Salvar Cadastro");
 
 				tornarCampoEditavel(true);
@@ -1101,7 +1120,7 @@ public class TelaVendas extends JFrame {
 			}
 		});
 
-		salvarClienteBtn.setVisible(false);
+		//salvarClienteBtn.setVisible(false);
 		salvarClienteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -1153,8 +1172,8 @@ public class TelaVendas extends JFrame {
 
 			}
 		});
-		limparBtn.setVisible(false);
-		excluirBtn.setVisible(false);
+		//limparBtn.setVisible(false);
+		//excluirBtn.setVisible(false);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(255, 255, 255));
@@ -1193,6 +1212,7 @@ public class TelaVendas extends JFrame {
 		panel_5.add(panel_9_2);
 
 		JButton btnLimparConsVenda = new JButton("");
+		btnLimparConsVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLimparConsVenda.setIcon(new ImageIcon(TelaVendas.class.getResource("8 (2).png")));
 		btnLimparConsVenda.setBounds(12, 502, 135, 60);
 		panel_9_2.add(btnLimparConsVenda);
@@ -1204,8 +1224,10 @@ public class TelaVendas extends JFrame {
 		panel_5.add(txtConsultaVenda);
 		txtConsultaVenda.setColumns(10);
 
-		JButton btnNewButton_1_2 = new JButton("Pesquisar");
-		btnNewButton_1_2.setBounds(304, 115, 89, 23);
+		JButton btnNewButton_1_2 = new JButton("pesquisar");
+		btnNewButton_1_2.setFont(new Font("Dialog", Font.PLAIN, 12));
+		btnNewButton_1_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNewButton_1_2.setBounds(304, 115, 100, 23);
 		panel_5.add(btnNewButton_1_2);
 
 		txtCupomFiscal = new JTextField();
@@ -1317,7 +1339,7 @@ public class TelaVendas extends JFrame {
 		panel_8_1_2.add(lblEstoque);
 
 		JPanel panelExcluir = new JPanel();
-		panelExcluir.setBounds(276, 222, 478, 251);
+		panelExcluir.setBounds(351, 198, 478, 251);
 		panel_1.add(panelExcluir);
 		panelExcluir.setVisible(false);
 		panelExcluir.setLayout(null);
@@ -1330,6 +1352,7 @@ public class TelaVendas extends JFrame {
 		panelExcluir.add(lblNewLabel_6);
 
 		JButton simButton = new JButton("Sim");
+		simButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		simButton.setFont(new Font("Dialog", Font.PLAIN, 15));
 		simButton.setActionCommand("OK");
@@ -1337,6 +1360,7 @@ public class TelaVendas extends JFrame {
 		panelExcluir.add(simButton);
 
 		JButton cancelButton = new JButton("Não");
+		cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelExcluir.setVisible(false);
@@ -1406,6 +1430,7 @@ public class TelaVendas extends JFrame {
 		panel_1.add(txtPesquisaProduto);
 
 		JButton btnPesquisaProduto = new JButton("pesquisar");
+		btnPesquisaProduto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		btnPesquisaProduto.setFont(new Font("Dialog", Font.PLAIN, 15));
 		btnPesquisaProduto.setBounds(370, 143, 112, 23);
@@ -1471,8 +1496,23 @@ public class TelaVendas extends JFrame {
 		txtQuantEstoque.setColumns(10);
 
 		JButton btnSalvarEstoque = new JButton("Salvar");
+		btnSalvarEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalvarEstoque.setBounds(528, 131, 119, 40);
 		panel_estoque.add(btnSalvarEstoque);
+		
+		JLabel lblNewLabel_10 = new JLabel("x");
+		lblNewLabel_10.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_10.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_estoque.setVisible(false);
+			}
+		});
+		
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_10.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_10.setBounds(605, 11, 46, 14);
+		panel_estoque.add(lblNewLabel_10);
 		btnSalvarEstoque.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -1539,19 +1579,23 @@ public class TelaVendas extends JFrame {
 
 		// CADASTRAR NOVO PRODUTO
 		JButton btnCadastrarEstoque = new JButton("");
+		btnCadastrarEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCadastrarEstoque.setIcon(new ImageIcon(TelaVendas.class.getResource("ADD.png")));
 		btnCadastrarEstoque.setBounds(14, 305, 135, 60);
 		panel_9_2_1.add(btnCadastrarEstoque);
 
 		JButton btnExcluirEstoque = new JButton("");
+		btnExcluirEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnExcluirEstoque.setIcon(new ImageIcon(TelaVendas.class.getResource("EXCLUIR.png")));
 		btnExcluirEstoque.setBounds(14, 460, 135, 60);
 		panel_9_2_1.add(btnExcluirEstoque);
 
-		JButton btnAtualizarEstoque = new JButton("ATUALIZAR");
+		JButton btnAtualizarEstoque = new JButton("");
+		btnAtualizarEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAtualizarEstoque.setIcon(new ImageIcon(TelaVendas.class.getResource("13.png")));
 		btnAtualizarEstoque.setBounds(14, 376, 135, 60);
 		panel_9_2_1.add(btnAtualizarEstoque);
-		btnAtualizarEstoque.setVisible(false);
+		//btnAtualizarEstoque.setVisible(false);
 
 		btnAtualizarEstoque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1589,6 +1633,7 @@ public class TelaVendas extends JFrame {
 		});
 
 		JLabel lblNewLabel_3 = new JLabel("F9");
+		lblNewLabel_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblNewLabel_3.setForeground(new Color(255, 207, 134));
 		lblNewLabel_3.setFont(new Font("Dialog", Font.PLAIN, 13));
 		lblNewLabel_3.setBounds(15, 170, 31, 14);
@@ -1605,12 +1650,6 @@ public class TelaVendas extends JFrame {
 		panel_9.add(btnPagamentoVenda);
 		btnPagamentoVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPagamentoVenda.setFont(new Font("Dubai", Font.BOLD, 15));
-
-		JLabel lblNewLabel_3_2 = new JLabel("F10");
-		lblNewLabel_3_2.setForeground(new Color(255, 207, 134));
-		lblNewLabel_3_2.setFont(new Font("Dialog", Font.PLAIN, 13));
-		lblNewLabel_3_2.setBounds(15, 247, 31, 14);
-		panel_9.add(lblNewLabel_3_2);
 
 		// LIMPA PRODUTOS ADICIONADOS NA VENDA
 		JButton btnNewButton_4 = new JButton("");
@@ -1709,6 +1748,7 @@ public class TelaVendas extends JFrame {
 
 		// VOLTA PARA ABA DE VENDAS E LIMPA
 		JButton btnVoltaParaVenda = new JButton("OK");
+		btnVoltaParaVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVoltaParaVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane.setSelectedIndex(0);
@@ -1750,18 +1790,45 @@ public class TelaVendas extends JFrame {
 
 		// FINALIZA VENDA
 		JButton btnFinalizarVenda = new JButton("");
+		btnFinalizarVenda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFinalizarVenda.setIcon(new ImageIcon(TelaVendas.class.getResource("1.png")));
 		btnFinalizarVenda.setBounds(8, 350, 135, 60);
 		panel_9_2_1_1.add(btnFinalizarVenda);
 
-		JButton btnNewButton_1 = new JButton("Voltar");
-		btnNewButton_1.setBounds(10, 427, 135, 60);
-		panel_9_2_1_1.add(btnNewButton_1);
+		JButton btnVoltarPag = new JButton("");
+		btnVoltarPag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedIndex(0);
+			}
+		});
+		btnVoltarPag.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVoltarPag.setIcon(new ImageIcon(TelaVendas.class.getResource("14.png")));
+		btnVoltarPag.setBounds(10, 427, 135, 60);
+		panel_9_2_1_1.add(btnVoltarPag);
 
-		JButton btnNewButton_1_1 = new JButton("");
-		btnNewButton_1_1.setIcon(new ImageIcon(TelaVendas.class.getResource("6.png")));
-		btnNewButton_1_1.setBounds(11, 502, 135, 60);
-		panel_9_2_1_1.add(btnNewButton_1_1);
+		JButton btnCancelarPag = new JButton("");
+		btnCancelarPag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				tabbedPane.setSelectedIndex(0);
+				
+				txtVendedorVenda.setText("");
+				txtCpfClienteVenda.setText("");
+				lblProdutosVenda.setText("");
+				lblQuantVendas.setText("");
+				lblPrecoUnVendas.setText("");
+				lblPrecoTotVenda.setText("");
+				txtTotalVenda.setText("");
+				lblNomeClienteVenda.setText("");
+				txtValorAPagar.setText("");
+				txtParcelasValor.setText("");
+				venda = 0;
+			}
+		});
+		btnCancelarPag.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCancelarPag.setIcon(new ImageIcon(TelaVendas.class.getResource("6.png")));
+		btnCancelarPag.setBounds(11, 502, 135, 60);
+		panel_9_2_1_1.add(btnCancelarPag);
 
 		JPanel panel_10_1_1_1_1 = new JPanel();
 		panel_10_1_1_1_1.setLayout(null);
